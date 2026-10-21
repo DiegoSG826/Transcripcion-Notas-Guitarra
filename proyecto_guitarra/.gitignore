@@ -1,0 +1,17 @@
+# Datos originales y resultados pesados: conservar fuera del historial Git.
+data/raw/**
+data/processed/**
+models/**
+outputs/**
+*.zip
+
+# Entornos y archivos temporales de Python.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Archivos del sistema/editor.
+.DS_Store
+Thumbs.db
