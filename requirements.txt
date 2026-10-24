@@ -1,0 +1,12 @@
+# Entorno recomendado: Python 3.12.x
+# Instalar con: python -m pip install -r requirements.txt
+
+numpy>=1.26,<3
+scipy>=1.11
+pandas>=2.1
+matplotlib>=3.8
+scikit-learn>=1.4
+librosa>=0.10.2
+soundfile>=0.12
+jams>=0.3.4
+tensorflow>=2.16,<2.20
