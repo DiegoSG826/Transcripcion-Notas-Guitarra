@@ -104,7 +104,7 @@ Las etapas se solapan en el calendario, pero el solapamiento no elimina sus depe
 7. Excluir relleno de las métricas cuando corresponda y documentar el método.
 8. No inventar resultados: toda cifra de rendimiento debe proceder de una ejecución real.
 9. Distinguir silencio de traste 0 en la representación de tablatura.
-10. No marcar una etapa como terminada hasta que existan evidencias y el revisor haya aceptado el entregable.
+10. No marcar una etapa como terminada hasta que existan evidencias y se cumplan sus criterios de aceptación. Se utilizarán las evidencias de ejecución documentadas en `docs/validacion_paquete.md`.
 
 ## 7. Uso del equipo
 
@@ -118,13 +118,28 @@ El archivo Planner define fechas, responsables, revisores y criterios, pero no c
 
 El estado inicial de las tareas es **No iniciado**. Una tarea solo debe pasar a completada cuando el entregable exista, cumpla el criterio de aceptación y el revisor haya validado la evidencia.
 
-## 9. Estructura académica sugerida
+## 9. Seguimiento de E01-T01: preparación del entorno
+
+**Estado de la tarea:** completada para las comprobaciones realizadas el 26 de octubre de 2026.
+
+Evidencias registradas en `docs/validacion_paquete.md`:
+
+- Python 3.12.4 ejecutado desde el entorno virtual `.venv`.
+- Dependencias de `requirements.txt` instaladas correctamente.
+- `pip check` terminó con `No broken requirements found.`
+- Importación de NumPy, SciPy, pandas, Matplotlib, scikit-learn, librosa, SoundFile, JAMS y TensorFlow correcta.
+- Auditoría preliminar: 360 WAV, 360 JAMS y 360 pares únicos; estado `sin_incidencias_preliminares`.
+- Informe de auditoría: `reports/auditoria_datos_20261026T055130_817529Z.json`.
+
+La revisión de Nancy se omite como requisito de cierre de E01-T01, según el acuerdo del equipo. Esto no elimina las revisiones ni los criterios de aceptación de las demás tareas. La auditoría tampoco certifica la corrección musical ni la alineación temporal de las anotaciones; estas comprobaciones quedan pendientes de pruebas específicas.
+
+## 10. Estructura académica sugerida
 
 Portada; resumen y palabras clave; índice; introducción; planteamiento del problema; objetivos; justificación; marco teórico y antecedentes; metodología; implementación; experimentos y resultados; discusión; conclusiones; trabajo futuro; referencias y anexos/manual.
 
 Los resultados que aún no se hayan obtenido deben identificarse como pendientes.
 
-## 10. Referencias
+## 11. Referencias
 
 Xi, Q., Bittner, R. M., Pauwels, J., Ye, X., & Bello, J. P. (2018). *GuitarSet: A dataset for guitar transcription*. Proceedings of the 19th International Society for Music Information Retrieval Conference, 453–460. https://archives.ismir.net/ismir2018/paper/000188.pdf
 
