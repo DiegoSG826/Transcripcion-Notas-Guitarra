@@ -20,7 +20,7 @@ El alcance inicial se limita a WAV, notas y tablatura ASCII, con eventos exporta
 
 ## Fuente de planificación
 
-El archivo Planner es la referencia principal del calendario, las tareas, responsables, revisores, dependencias, entregables y criterios de aceptación**. El proyecto se organiza en ocho etapas durante el periodo del **26 de octubre al 28 de noviembre de 2026**, que contiene cinco semanas laborables. Este calendario comprimido sustituye el plan previo de siete semanas.
+El archivo Planner es la referencia principal del calendario, las tareas, responsables, revisores, dependencias, entregables y criterios de aceptación. El proyecto se organiza en ocho etapas durante el periodo del **26 de octubre al 28 de noviembre de 2026**, que contiene cinco semanas laborables.
 
 El detalle de etapas y criterios está en [`docs/planificacion.md`](docs/planificacion.md). Se conserva ese nombre de archivo para no romper referencias existentes; su contenido corresponde al calendario vigente del Planner.
 
@@ -41,15 +41,15 @@ Cada integrante es responsable de dos etapas. Los revisores y las fechas por tar
 
 ## Estado actual
 
-La auditoría inicial del conjunto de datos encontró 360 WAV, 360 archivos JAMS y 360 pares únicos por nombre. El informe más reciente compartido durante la preparación fue:
+La auditoría preliminar ejecutada en el entorno virtual de Windows con Python 3.12.4 encontró 360 WAV, 360 archivos JAMS y 360 pares únicos. La salida fue `sin_incidencias_preliminares`. El informe generado por esa ejecución es:
 
 ```text
-reports/auditoria_datos_20261024T082425_620757Z.json
+reports/auditoria_datos_20261026T055130_817529Z.json
 ```
 
-La auditoría informó `sin_incidencias_preliminares`. Esto comprueba inventario, emparejamiento y ciertos aspectos estructurales; no certifica que las anotaciones sean musicalmente correctas ni que estén alineadas temporalmente con el audio.
+También se verificó la instalación de `requirements.txt`, `pip check` no detectó requisitos incumplidos y las nueve bibliotecas principales pudieron importarse correctamente. El detalle de estas pruebas está en [`docs/validacion_paquete.md`](docs/validacion_paquete.md).
 
-El modelo entrenado, sus métricas, la inferencia completa y la tablatura generada no deben declararse terminados hasta contar con evidencias de ejecución.
+La auditoría comprueba el inventario y los aspectos estructurales implementados por el script; no certifica que las anotaciones sean musicalmente correctas ni que estén alineadas temporalmente con el audio. El modelo entrenado, sus métricas, la inferencia completa y la tablatura generada no deben declararse terminados hasta contar con evidencias de ejecución.
 
 ## 1. Requisitos
 
@@ -101,6 +101,18 @@ python -m pip install -r requirements.txt
 ```
 
 `requirements.txt` instala las bibliotecas Python; no descarga GuitarSet. Las dependencias deben probarse con Python 3.12 y mantenerse actualizadas conforme se implementen los módulos.
+
+### Comprobaciones del entorno
+
+Con el entorno virtual activo, ejecuta:
+
+```bat
+.venv\\Scripts\\python.exe --version
+.venv\\Scripts\\python.exe -m pip check
+.venv\\Scripts\\python.exe -c "import numpy, scipy, pandas, matplotlib, sklearn, librosa, soundfile, jams, tensorflow; print('Importaciones correctas')"
+```
+
+La ejecución documentada en `docs/validacion_paquete.md` obtuvo Python 3.12.4, `No broken requirements found.` y `Importaciones correctas`.
 
 ## 4. Descargar y organizar GuitarSet
 
@@ -167,7 +179,8 @@ Transcripcion-Notas-Guitarra/
 │       ├── annotation/       # Anotaciones JAMS
 │       └── audio_mono-mic/   # Audio WAV
 ├── docs/
-│   ├── plan_8_semanas.md     # Plan alineado con Planner
+│   ├── planificacion.md       # Calendario vigente de cinco semanas
+│   ├── validacion_paquete.md  # Evidencias de validación del entorno
 │   └── ...
 ├── models/                   # Modelos y checkpoints
 ├── notebooks/                # Exploración y alternativa Colab
