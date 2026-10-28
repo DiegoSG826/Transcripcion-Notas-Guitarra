@@ -146,3 +146,21 @@ Por lo tanto, estas evidencias respaldan el cierre de la preparación del entorn
 - `scripts/auditar_datos.py`: script de auditoría.
 - `reports/auditoria_datos_20261026T055130_817529Z.json`: informe generado por la ejecución documentada.
 - Registro de comandos y salidas ejecutadas el 26 de octubre de 2026.
+
+## 11. E01-T02: alcance, flujo e interfaces
+
+El 28 de octubre de 2026 se documentó el contrato de integración en
+[`contratos_modulos.md`](contratos_modulos.md). Define el alcance limitado a WAV,
+notas y tablatura ASCII; el flujo E02--E08; la correspondencia entre fuente JAMS,
+cuerda convencional y eje de tensor; las 21 clases por cuerda; el uso de máscara de
+relleno; y la convención temporal de los frames.
+
+La decisión de codificación es: clase `0` para ausencia de nota y clases `1` a `20`
+para trastes `0` a `19`. En particular, traste 0 se mantiene distinto de silencio.
+El documento establece además que ninguna etiqueta MIDI continua se redondea ni los
+trastes fuera del rango se recortan sin una política trazable de E02.
+
+La evidencia de esta tarea es documental y de diseño. La implementación y las pruebas
+funcionales de cada interfaz quedan bajo responsabilidad de E02--E08. Conforme al
+acuerdo indicado para este trabajo, no se requiere una revisión independiente para
+cerrar E01-T02.
