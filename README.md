@@ -24,6 +24,8 @@ El archivo Planner es la referencia principal del calendario, las tareas, respon
 
 El detalle de etapas y criterios está en [`docs/planificacion.md`](docs/planificacion.md). Se conserva ese nombre de archivo para no romper referencias existentes; su contenido corresponde al calendario vigente del Planner.
 
+El flujo técnico y los contratos de entrada/salida entre E02 y E08 están definidos en [`docs/contratos_modulos.md`](docs/contratos_modulos.md). El documento fija la codificación de etiquetas, el orden de cuerdas y la convención temporal antes de implementar los módulos consumidores.
+
 ### Responsables por etapa
 
 | Etapa | Nombre | Responsable |
