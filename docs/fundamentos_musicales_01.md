@@ -1,4 +1,4 @@
-# Fundamentos musicales: primera lección
+# Fundamentos musicales y glosario inicial
 
 Los ejemplos siguientes son didácticos y calculados. No son predicciones de un modelo
 entrenado. No necesitas saber tocar guitarra para entenderlos.
@@ -88,9 +88,9 @@ ruido y sonido de otras cuerdas. La correspondencia de esta clase con las anotac
 se documentará en el cargador de datos.
 
 Con trastes 0–19 tenemos 20 posiciones y, al añadir «sin nota», 21 clases por cuerda.
-No usamos el traste 20 como posición válida dentro de este alcance. Si se elige 20
-como código interno de «sin nota», se documentará que es un identificador de clase,
-no un número de traste.
+El contrato vigente codifica «sin nota» como clase 0 y el traste r como clase r + 1;
+por eso traste 0 es clase 1. No usamos el traste 20 como posición válida dentro de
+este alcance.
 
 ## 7. Una nota, varias notas y un acorde
 
@@ -159,6 +159,21 @@ se verificará en los archivos antes de implementar esta correspondencia.
 Respuestas: 1) Es cuerda al aire sonando. 2) A2 en ambos casos. 3) Sí.
 4) Una pulsación produce varios componentes relacionados. 5) Puede haber nuevos
 ataques del mismo traste sin que cambie la clase predicha.
+
+## 11. Glosario breve
+
+| Término | Definición usada en el proyecto |
+|---|---|
+| Acorde | Varias notas que suenan simultáneamente; no se genera un nombre de acorde en esta versión. |
+| Armónico | Componente frecuencial que acompaña a la fundamental y contribuye al timbre. |
+| CQT | Representación de tiempo y frecuencia con espaciado geométrico entre bandas. |
+| CNN | Red que aprende patrones locales de la CQT. |
+| CRNN | Modelo que combina una CNN con una capa recurrente para usar el contexto temporal. |
+| Frame | Observación de audio o CQT situada en un instante temporal documentado. |
+| JAMS | Formato JSON estructurado para anotaciones musicales. |
+| MIDI | Numeración de alturas musicales donde un incremento entero equivale a un semitono. |
+| Relleno | Posición añadida para igualar longitudes de secuencias; no es una clase y se excluye con una máscara. |
+| Validación | Conjunto usado para elegir decisiones del modelo sin consultar el conjunto de prueba. |
 
 ## Antecedente para ampliar
 
