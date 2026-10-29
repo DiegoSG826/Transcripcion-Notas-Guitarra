@@ -3,11 +3,11 @@
 ## 1. Alcance
 
 **Entrada:** archivo WAV de guitarra.  
-**Salida:** predicciones de notas y tablatura ASCII, además de eventos exportables a CSV/JSON.
+**Salida:** predicciones de notas y tablatura ASCII, además de eventos exportables a CSV/JSON y una demo web local para cargar un WAV, visualizar la tablatura y descargar sus resultados.
 
 La propuesta técnica utiliza el audio mono de micrófono de GuitarSet, una representación CQT y un modelo CNN/CRNN. La salida prevista del modelo es `lote × tiempo × 6 × 21`: seis cuerdas y 21 clases por cuerda, sujeto a la definición de etiquetas acordada en la implementación.
 
-La primera versión se limita a WAV, notas y tablatura ASCII. No se deben presentar como implementadas funciones que todavía no hayan sido desarrolladas y verificadas.
+La primera versión se limita a WAV, notas, tablatura ASCII y una demo web local para una solicitud por vez. No incluye despliegue público, cuentas, historial persistente ni procesamiento concurrente. No se deben presentar como implementadas funciones que todavía no hayan sido desarrolladas y verificadas.
 
 ## 2. Calendario oficial del proyecto
 
@@ -78,8 +78,8 @@ Cada integrante es responsable de dos etapas completas. Los revisores son parte 
 
 ### E08. Inferencia, suavizado y tablatura — Diego
 **Fechas:** 16–28 de noviembre.  
-**Entregables:** `inference.py`, `tablature_generator.py`, salida ASCII, eventos CSV/JSON y manual.  
-**Aceptación:** WAV externo procesado sin JAMS; seis líneas en orden correcto; silencio distinguido de traste 0.
+**Entregables:** `inference.py`, `tablature_generator.py`, `web_app.py`, salida ASCII, eventos CSV/JSON y manual.
+**Aceptación:** WAV externo procesado sin JAMS; seis líneas en orden correcto; silencio distinguido de traste 0; la demo local permite cargar un WAV, consultar la tablatura y descargar los archivos de esa misma ejecución.
 
 ## 5. Dependencias críticas
 
@@ -89,7 +89,7 @@ Cada integrante es responsable de dos etapas completas. Los revisores son parte 
 - **E05** debe comprobar dimensiones y una prueba de aprendizaje pequeña antes del entrenamiento completo.
 - **E06** depende de la aceptación de E02–E05 para el entrenamiento completo.
 - **E07** requiere el modelo de E06 y los parámetros de suavizado de E08 congelados antes de evaluar el conjunto de prueba.
-- **E08** requiere E03–E06 estables para inferencia real; coordina con E07 la congelación de los parámetros de suavizado.
+- **E08** requiere E03–E06 estables para inferencia real; coordina con E07 la congelación de los parámetros de suavizado. La demo web de E08 consume la misma función de inferencia que la interfaz de línea de comandos; no crea un flujo distinto.
 
 Las etapas se solapan en el calendario, pero el solapamiento no elimina sus dependencias. Los prototipos pueden empezar con muestras validadas; la aceptación final requiere los insumos definidos en el Planner.
 

@@ -176,3 +176,9 @@ No se declaran resultados de entrenamiento, evaluación o inferencia: las eviden
 disponibles se limitan al entorno, el inventario preliminar de datos y el diseño de
 interfaces. Conforme al acuerdo indicado para este trabajo, no se requiere una revisión
 independiente para cerrar E01-T03.
+
+## 13. Ajuste de E01-T02: demo web local
+
+El contrato de módulos se actualizó a la versión 1.1 para incorporar una demo local como integración de E08. La página recibirá un solo WAV por solicitud, mostrará la tablatura ASCII y permitirá descargar los eventos CSV/JSON y el texto generado. Usará la misma inferencia de E08, no una segunda ruta de procesamiento.
+
+No se incluye despliegue público, cuentas, historial persistente ni cargas concurrentes. La demostración sigue pendiente de implementación y prueba funcional cuando E08 tenga un checkpoint y sus módulos estables.
