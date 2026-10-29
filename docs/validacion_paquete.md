@@ -164,3 +164,15 @@ La evidencia de esta tarea es documental y de diseño. La implementación y las 
 funcionales de cada interfaz quedan bajo responsabilidad de E02--E08. Conforme al
 acuerdo indicado para este trabajo, no se requiere una revisión independiente para
 cerrar E01-T02.
+
+## 12. E01-T03: fundamentos y plan de trabajo
+
+El bloque inicial del reporte se consolidó en
+[reporte_inicial_e01.md](reporte_inicial_e01.md), con introducción, planteamiento,
+objetivos, justificación, alcance, límites y metodología planificada. El glosario y los
+ejemplos didácticos se mantienen en [fundamentos_musicales_01.md](fundamentos_musicales_01.md).
+
+No se declaran resultados de entrenamiento, evaluación o inferencia: las evidencias
+disponibles se limitan al entorno, el inventario preliminar de datos y el diseño de
+interfaces. Conforme al acuerdo indicado para este trabajo, no se requiere una revisión
+independiente para cerrar E01-T03.

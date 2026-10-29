@@ -26,6 +26,8 @@ El detalle de etapas y criterios está en [`docs/planificacion.md`](docs/planifi
 
 El flujo técnico y los contratos de entrada/salida entre E02 y E08 están definidos en [`docs/contratos_modulos.md`](docs/contratos_modulos.md). El documento fija la codificación de etiquetas, el orden de cuerdas y la convención temporal antes de implementar los módulos consumidores.
 
+El bloque inicial del reporte, con planteamiento, objetivos, justificación, alcance y metodología prevista, está en [`docs/reporte_inicial_e01.md`](docs/reporte_inicial_e01.md). Los conceptos y el glosario de apoyo están en [`docs/fundamentos_musicales_01.md`](docs/fundamentos_musicales_01.md).
+
 ### Responsables por etapa
 
 | Etapa | Nombre | Responsable |
