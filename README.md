@@ -16,7 +16,7 @@
 
 El proyecto busca procesar una grabación WAV de guitarra, estimar notas a lo largo del tiempo y producir una tablatura ASCII básica. La propuesta técnica emplea el conjunto GuitarSet, preprocesamiento de audio, una representación CQT y un modelo CNN/CRNN.
 
-El alcance inicial se limita a WAV, notas y tablatura ASCII, con eventos exportables a CSV/JSON. Las funcionalidades y resultados se considerarán completos únicamente después de implementarlos y verificarlos.
+El alcance inicial se limita a WAV, notas y tablatura ASCII, con eventos exportables a CSV/JSON y una demo web local para cargar un WAV, ver la tablatura y descargar los resultados. Las funcionalidades y resultados se considerarán completos únicamente después de implementarlos y verificarlos.
 
 ## Fuente de planificación
 
@@ -213,7 +213,7 @@ El orden de implementación sigue las dependencias del Planner:
 5. E05: CNN de referencia, CRNN y pruebas de dimensiones.
 6. E06: entrenamiento, experimentos y selección de checkpoint por validación.
 7. E07: métricas, matrices de confusión y análisis de errores.
-8. E08: inferencia sobre WAV externo, suavizado, eventos y tablatura ASCII.
+8. E08: inferencia sobre WAV externo, suavizado, eventos, tablatura ASCII y demo web local.
 
 Las etapas pueden solaparse en fechas, pero el solapamiento no elimina las dependencias ni los criterios de aceptación. No se debe usar el conjunto de prueba para ajustar parámetros.
 

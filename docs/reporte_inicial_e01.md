@@ -46,10 +46,11 @@ La versión inicial acepta WAV de guitarra y genera:
 - estados por frame para seis cuerdas;
 - eventos con cuerda, traste, nota, inicio y final en CSV/JSON;
 - tablatura ASCII de seis líneas.
+- una demo web local para cargar un WAV, ver la tablatura y descargar los archivos producidos.
 
 Se entrenará con el audio mono de micrófono y las anotaciones JAMS de GuitarSet. Cada cuerda usa 21 clases: código 0 para ausencia de nota y códigos 1 a 20 para los trastes 0 a 19. Traste 0, es decir una cuerda al aire, no equivale a silencio.
 
-Quedan fuera de alcance los nombres de acordes, MusicXML, ejecución en tiempo real, otros instrumentos y trastes fuera de 0 a 19. Un evento fuera de rango o una altura MIDI no entera debe registrarse y tratarse mediante una regla explícita; no se recorta ni redondea de forma silenciosa. La agrupación de estados tampoco detecta por sí sola ataques repetidos en un mismo traste, por lo que esta limitación debe declararse en la salida si no se incorpora un detector específico.
+Quedan fuera de alcance los nombres de acordes, MusicXML, ejecución en tiempo real, otros instrumentos, trastes fuera de 0 a 19, despliegue público, cuentas de usuario, historial persistente y cargas concurrentes. La demo web usa la misma inferencia local de E08; no crea un modelo ni una ruta de procesamiento distinta. Un evento fuera de rango o una altura MIDI no entera debe registrarse y tratarse mediante una regla explícita; no se recorta ni redondea de forma silenciosa. La agrupación de estados tampoco detecta por sí sola ataques repetidos en un mismo traste, por lo que esta limitación debe declararse en la salida si no se incorpora un detector específico.
 
 ## 6. Metodología y plan de trabajo
 
@@ -64,7 +65,7 @@ El calendario vigente dura cinco semanas laborables, del 26 de octubre al 28 de 
 | E05 | Modelo | CNN/CRNN con salida temporal de seis cuerdas |
 | E06 | Entrenamiento | Experimentos, checkpoint y registros |
 | E07 | Evaluación | Métricas, matrices de confusión y análisis |
-| E08 | Inferencia y tablatura | Eventos y tablatura para un WAV externo |
+| E08 | Inferencia y tablatura | Eventos, tablatura y demo web local para un WAV externo |
 
 Las etapas pueden solaparse, pero no se omiten sus dependencias: E02 precede al procesamiento final; E03 y E04 alimentan al modelo; E05 precede al entrenamiento; E06 y los parámetros de suavizado congelados preceden a la prueba de E07. El detalle de fechas, responsables y criterios está en [planificacion.md](planificacion.md), y los formatos de integración en [contratos_modulos.md](contratos_modulos.md).
 

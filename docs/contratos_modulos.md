@@ -1,13 +1,13 @@
 # Contratos de integración y flujo del sistema
 
 **Tarea:** E01-T02 - Definir alcance, flujo e interfaces de módulos  
-**Versión del contrato:** 1.0  
+**Versión del contrato:** 1.1
 **Fecha:** 28 de octubre de 2026  
 **Estado:** acordado para desarrollo. Los módulos de E02-E08 deben implementarlo y comprobarlo con datos reales antes de declararse terminados.
 
 ## 1. Alcance acordado
 
-El sistema procesa un archivo WAV de guitarra y produce estados por cuerda, eventos musicales y tablatura ASCII. Durante entrenamiento usa pares WAV/JAMS de GuitarSet; en inferencia no requiere un archivo JAMS.
+El sistema procesa un archivo WAV de guitarra y produce estados por cuerda, eventos musicales y tablatura ASCII. Durante entrenamiento usa pares WAV/JAMS de GuitarSet; en inferencia no requiere un archivo JAMS. Una demostración web local permite cargar un solo WAV, consultar la tablatura y descargar los resultados generados.
 
 Dentro del alcance:
 
@@ -15,8 +15,9 @@ Dentro del alcance:
 - seis cuerdas de guitarra estándar;
 - clases de silencio y trastes 0 a 19;
 - modelo CNN/CRNN, eventos CSV/JSON y tablatura ASCII.
+- interfaz web local para una transcripción por solicitud.
 
-Fuera del alcance de esta versión: reconocimiento de nombres de acordes, MusicXML, procesamiento en tiempo real, otros instrumentos y estimación de trastes fuera de 0-19. Un evento fuera del rango no se recorta silenciosamente: E02 lo registra como incidencia y aplica la política documentada para excluirlo o conservarlo fuera de la etiqueta de entrenamiento.
+Fuera del alcance de esta versión: reconocimiento de nombres de acordes, MusicXML, procesamiento en tiempo real, otros instrumentos, estimación de trastes fuera de 0-19, despliegue público, cuentas de usuario, persistencia de resultados y procesamiento concurrente de varias cargas. Un evento fuera del rango no se recorta silenciosamente: E02 lo registra como incidencia y aplica la política documentada para excluirlo o conservarlo fuera de la etiqueta de entrenamiento.
 
 ## 2. Flujo y responsables
 
@@ -36,6 +37,7 @@ flowchart LR
     C --> E08[E08: inferencia y tablatura]
     WAV --> E08
     E08 --> D[Eventos CSV/JSON y tablatura ASCII]
+    D --> WEB[Demo web local: ver y descargar]
 ```
 
 E01 define estas interfaces. E02, E03 y E04 no pueden cambiar una dimensión, código de clase o convención temporal sin actualizar este documento, la configuración afectada y los consumidores. E07 solo usa el conjunto de prueba después de congelar modelo, preprocesamiento y parámetros de suavizado de E08.
@@ -150,6 +152,18 @@ Al formar lotes, E04 añade los ejes `B` y el canal de entrada: `x [B, T, F, 1]`
 - tablatura ASCII con seis líneas, de cuerda 1 (E4) a cuerda 6 (E2), rotuladas de modo explícito para no confundir el orden de presentación con el eje del tensor.
 
 La inferencia no carga ni exige un JAMS. Silencio, traste 0, audio corto y final incompleto deben conservar su significado definido arriba.
+
+### Demo web local - `web_app.py` (integración de E08)
+
+La aplicación web no implementa una segunda ruta de transcripción: llama a la misma función pública de E08 que usa la interfaz de línea de comandos, con un WAV y una configuración/checkpoint ya seleccionados.
+
+**Entrada:** una solicitud local con un único archivo WAV. Si el archivo no puede leerse, falta el checkpoint o falla la inferencia, la página informa un error claro y no ofrece resultados incompletos como correctos.
+
+**Salida visible:** tablatura ASCII y resumen de eventos de la solicitud actual.
+
+**Descargas:** archivos de tablatura de texto, eventos CSV y eventos JSON producidos por E08. Cada descarga conserva la misma ejecución mostrada en pantalla.
+
+**Límites de operación:** se ejecuta solamente en `localhost`; no requiere cuentas ni JAMS, no guarda historial de usuarios y procesa una carga por solicitud. Los archivos temporales se separan de los resultados finales y no se versionan.
 
 ## 5. Casos de aceptación para la integración
 
