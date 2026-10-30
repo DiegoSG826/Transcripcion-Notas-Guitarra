@@ -182,3 +182,7 @@ independiente para cerrar E01-T03.
 El contrato de módulos se actualizó a la versión 1.1 para incorporar una demo local como integración de E08. La página recibirá un solo WAV por solicitud, mostrará la tablatura ASCII y permitirá descargar los eventos CSV/JSON y el texto generado. Usará la misma inferencia de E08, no una segunda ruta de procesamiento.
 
 No se incluye despliegue público, cuentas, historial persistente ni cargas concurrentes. La demostración sigue pendiente de implementación y prueba funcional cuando E08 tenga un checkpoint y sus módulos estables.
+
+## 14. Arquitectura de software
+
+El código fuente adopta programación orientada a objetos. Las entidades comunes se definen en el paquete de dominio, y la asignación de clases a las etapas E02--E08 se documenta en [arquitectura_poo.md](arquitectura_poo.md). Esta arquitectura separa la lógica de transcripción de los scripts y de la demo web, que usarán el mismo servicio de inferencia.

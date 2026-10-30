@@ -174,6 +174,9 @@ ataques del mismo traste sin que cambie la clase predicha.
 | MIDI | Numeración de alturas musicales donde un incremento entero equivale a un semitono. |
 | Relleno | Posición añadida para igualar longitudes de secuencias; no es una clase y se excluye con una máscara. |
 | Validación | Conjunto usado para elegir decisiones del modelo sin consultar el conjunto de prueba. |
+| POO | Paradigma que organiza el sistema en objetos con estado, comportamiento y responsabilidades delimitadas. |
+| Entidad de dominio | Objeto que representa una regla o concepto del problema, como un evento de nota o metadatos de frame. |
+| Servicio de aplicación | Objeto que coordina un caso de uso completo, como entrenar, evaluar o transcribir un WAV. |
 
 ## Antecedente para ampliar
 

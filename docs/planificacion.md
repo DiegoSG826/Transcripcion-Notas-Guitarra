@@ -5,7 +5,7 @@
 **Entrada:** archivo WAV de guitarra.  
 **Salida:** predicciones de notas y tablatura ASCII, además de eventos exportables a CSV/JSON y una demo web local para cargar un WAV, visualizar la tablatura y descargar sus resultados.
 
-La propuesta técnica utiliza el audio mono de micrófono de GuitarSet, una representación CQT y un modelo CNN/CRNN. La salida prevista del modelo es `lote × tiempo × 6 × 21`: seis cuerdas y 21 clases por cuerda, sujeto a la definición de etiquetas acordada en la implementación.
+La propuesta técnica utiliza el audio mono de micrófono de GuitarSet, una representación CQT y un modelo CNN/CRNN. Se implementa con programación orientada a objetos: entidades de dominio, servicios de aplicación y adaptadores de archivos o presentación tienen responsabilidades separadas. La salida prevista del modelo es `lote × tiempo × 6 × 21`: seis cuerdas y 21 clases por cuerda, sujeto a la definición de etiquetas acordada en la implementación.
 
 La primera versión se limita a WAV, notas, tablatura ASCII y una demo web local para una solicitud por vez. No incluye despliegue público, cuentas, historial persistente ni procesamiento concurrente. No se deben presentar como implementadas funciones que todavía no hayan sido desarrolladas y verificadas.
 
@@ -43,42 +43,42 @@ Cada integrante es responsable de dos etapas completas. Los revisores son parte 
 
 ### E01. Planeación, fundamentos y entorno — Diego
 **Fechas:** 26–30 de octubre.  
-**Entregables:** plan, glosario, diagrama de flujo, repositorio, entorno y contratos de módulos.  
-**Aceptación:** entorno reproducible; interfaces documentadas; alcance limitado a WAV, notas y tablatura ASCII.
+**Entregables:** plan, glosario, diagrama de flujo, repositorio, entorno, contratos de módulos y arquitectura POO.
+**Aceptación:** entorno reproducible; interfaces y responsabilidades de clases documentadas; alcance limitado a WAV, notas y tablatura ASCII.
 
 ### E02. Datos, anotaciones y particiones — Nancy Ashanti
 **Fechas:** 26 de octubre–6 de noviembre.  
-**Entregables:** `data_loader.py`, manifiesto, incidencias, etiquetas y particiones train/val/test.  
+**Entregables:** `data_loader.py`, clases de carga/validación/partición, manifiesto, incidencias, etiquetas y particiones train/val/test.
 **Aceptación:** pares WAV/JAMS verificados; cada archivo pertenece a una sola partición; intersecciones vacías.
 
 ### E03. Preprocesamiento de audio — Nancy Ashanti
 **Fechas:** 2–13 de noviembre.  
-**Entregables:** `preprocessing.py`, configuración, pruebas, figuras y trazabilidad temporal.  
+**Entregables:** `preprocessing.py`, clases de preprocesamiento/segmentación, configuración, pruebas, figuras y trazabilidad temporal.
 **Aceptación:** tiempos verificables; audio corto o silencioso válido; valores finitos; última ventana comprobada.
 
 ### E04. Extracción CQT y alineación temporal — Luis Angel
 **Fechas:** 2–13 de noviembre.  
-**Entregables:** `cqt_extraction.py`, matrices, etiquetas alineadas, configuración y verificador.  
+**Entregables:** `cqt_extraction.py`, clases de CQT/alineación/lotes, matrices, etiquetas alineadas, configuración y verificador.
 **Aceptación:** dimensiones documentadas; valores finitos; tiempos alineados; guardado y carga comprobados.
 
 ### E05. Modelo CNN de referencia y CRNN — Luis Angel
 **Fechas:** 9–20 de noviembre.  
-**Entregables:** `model_crnn.py`, CNN/CRNN, resumen, diagrama, configuración y pruebas.  
+**Entregables:** `model_crnn.py`, clases de fábrica/modelo CNN/CRNN, resumen, diagrama, configuración y pruebas.
 **Aceptación:** salida `lote × tiempo × 6 × 21`; se conserva el eje temporal; pérdida finita en una prueba pequeña.
 
 ### E06. Entrenamiento y aumento de datos — Gabriel
 **Fechas:** 16–27 de noviembre.  
-**Entregables:** `train.py`, configuraciones, logs, curvas, checkpoints y tabla de experimentos.  
+**Entregables:** `train.py`, clases de entrenamiento/experimentos/checkpoints, configuraciones, logs, curvas, checkpoints y tabla de experimentos.
 **Aceptación:** experimentos trazables; checkpoint recuperable; modelo elegido usando únicamente validación.
 
 ### E07. Evaluación y análisis de errores — Gabriel
 **Fechas:** 23–28 de noviembre.  
-**Entregables:** `evaluate.py`, métricas, seis matrices de confusión, tabla comparativa y análisis.  
+**Entregables:** `evaluate.py`, clases de evaluación/métricas/reporte, seis matrices de confusión, tabla comparativa y análisis.
 **Aceptación:** métricas reproducibles; relleno excluido; conjunto de prueba utilizado sin ajustar parámetros con él.
 
 ### E08. Inferencia, suavizado y tablatura — Diego
 **Fechas:** 16–28 de noviembre.  
-**Entregables:** `inference.py`, `tablature_generator.py`, `web_app.py`, salida ASCII, eventos CSV/JSON y manual.
+**Entregables:** `inference.py`, `tablature_generator.py`, `web_app.py`, clases de servicio/suavizado/tablatura/exportación, salida ASCII, eventos CSV/JSON y manual.
 **Aceptación:** WAV externo procesado sin JAMS; seis líneas en orden correcto; silencio distinguido de traste 0; la demo local permite cargar un WAV, consultar la tablatura y descargar los archivos de esa misma ejecución.
 
 ## 5. Dependencias críticas

@@ -14,7 +14,7 @@
 
 ## Descripción
 
-El proyecto busca procesar una grabación WAV de guitarra, estimar notas a lo largo del tiempo y producir una tablatura ASCII básica. La propuesta técnica emplea el conjunto GuitarSet, preprocesamiento de audio, una representación CQT y un modelo CNN/CRNN.
+El proyecto busca procesar una grabación WAV de guitarra, estimar notas a lo largo del tiempo y producir una tablatura ASCII básica. La propuesta técnica emplea el conjunto GuitarSet, preprocesamiento de audio, una representación CQT y un modelo CNN/CRNN. El código se organiza con programación orientada a objetos, separando entidades de dominio, servicios de aplicación, infraestructura y presentación.
 
 El alcance inicial se limita a WAV, notas y tablatura ASCII, con eventos exportables a CSV/JSON y una demo web local para cargar un WAV, ver la tablatura y descargar los resultados. Las funcionalidades y resultados se considerarán completos únicamente después de implementarlos y verificarlos.
 
@@ -27,6 +27,8 @@ El detalle de etapas y criterios está en [`docs/planificacion.md`](docs/planifi
 El flujo técnico y los contratos de entrada/salida entre E02 y E08 están definidos en [`docs/contratos_modulos.md`](docs/contratos_modulos.md). El documento fija la codificación de etiquetas, el orden de cuerdas y la convención temporal antes de implementar los módulos consumidores.
 
 El bloque inicial del reporte, con planteamiento, objetivos, justificación, alcance y metodología prevista, está en [`docs/reporte_inicial_e01.md`](docs/reporte_inicial_e01.md). Los conceptos y el glosario de apoyo están en [`docs/fundamentos_musicales_01.md`](docs/fundamentos_musicales_01.md).
+
+La distribución de clases, responsabilidades y dependencias está definida en [`docs/arquitectura_poo.md`](docs/arquitectura_poo.md). Las entidades compartidas residen en [`src/transcripcion_guitarra`](src/transcripcion_guitarra).
 
 ### Responsables por etapa
 
@@ -194,7 +196,8 @@ Transcripcion-Notas-Guitarra/
 │   ├── auditar_datos.py
 │   └── preparar_datos.py
 ├── splits/                   # Particiones reproducibles
-├── src/                      # Código fuente
+├── src/
+│   └── transcripcion_guitarra/ # Entidades y servicios orientados a objetos
 ├── .gitignore
 ├── README.md
 └── requirements.txt
@@ -206,7 +209,7 @@ La estructura describe la organización prevista; algunos módulos se incorporar
 
 El orden de implementación sigue las dependencias del Planner:
 
-1. E01: alcance, repositorio, entorno y contratos de módulos.
+1. E01: alcance, repositorio, entorno, contratos y arquitectura POO.
 2. E02: pares WAV/JAMS, etiquetas y particiones sin fuga de datos.
 3. E03: preprocesamiento y trazabilidad temporal.
 4. E04: CQT y alineación de etiquetas.
