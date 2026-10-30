@@ -9,7 +9,7 @@
 
 Una grabación de guitarra contiene información musical implícita en una señal acústica. Transformarla en una representación legible requiere localizar cambios a lo largo del tiempo, distinguir alturas musicales y, para una tablatura, estimar la cuerda y el traste usados. La dificultad aumenta cuando hay varias cuerdas activas, armónicos, ruido, resonancias y notas cuya misma altura puede ejecutarse en posiciones distintas.
 
-Este proyecto propone un sistema de transcripción para archivos WAV de guitarra. El flujo previsto combina una representación tiempo-frecuencia mediante Transformada Q Constante (CQT), una red convolucional y recurrente (CNN/CRNN), y una conversión posterior de estados por cuerda a eventos y tablatura ASCII. GuitarSet aporta pares de audio y anotaciones para construir y evaluar el flujo.
+Este proyecto propone un sistema de transcripción para archivos WAV de guitarra. El flujo previsto combina una representación tiempo-frecuencia mediante Transformada Q Constante (CQT), una red convolucional y recurrente (CNN/CRNN), y una conversión posterior de estados por cuerda a eventos y tablatura ASCII. GuitarSet aporta pares de audio y anotaciones para construir y evaluar el flujo. La implementación usa programación orientada a objetos para separar las entidades musicales y temporales de los servicios de procesamiento, los repositorios de archivos y las interfaces de consola o web.
 
 ## 2. Planteamiento del problema
 
@@ -25,7 +25,7 @@ Diseñar e integrar un flujo reproducible que convierta una grabación WAV de gu
 
 ### Objetivos específicos
 
-1. Documentar el alcance, las convenciones de etiquetas y las interfaces entre módulos antes de implementar el flujo completo.
+1. Documentar el alcance, las convenciones de etiquetas, la arquitectura orientada a objetos y las interfaces entre módulos antes de implementar el flujo completo.
 2. Inventariar y emparejar los WAV y JAMS de GuitarSet, interpretar sus eventos y crear particiones sin cruces.
 3. Preparar audio y CQT manteniendo una referencia temporal verificable con las etiquetas.
 4. Construir una CNN de referencia y una CRNN cuya salida conserve el tiempo y tenga seis distribuciones de 21 clases por frame.
@@ -67,7 +67,7 @@ El calendario vigente dura cinco semanas laborables, del 26 de octubre al 28 de 
 | E07 | Evaluación | Métricas, matrices de confusión y análisis |
 | E08 | Inferencia y tablatura | Eventos, tablatura y demo web local para un WAV externo |
 
-Las etapas pueden solaparse, pero no se omiten sus dependencias: E02 precede al procesamiento final; E03 y E04 alimentan al modelo; E05 precede al entrenamiento; E06 y los parámetros de suavizado congelados preceden a la prueba de E07. El detalle de fechas, responsables y criterios está en [planificacion.md](planificacion.md), y los formatos de integración en [contratos_modulos.md](contratos_modulos.md).
+Las etapas pueden solaparse, pero no se omiten sus dependencias: E02 precede al procesamiento final; E03 y E04 alimentan al modelo; E05 precede al entrenamiento; E06 y los parámetros de suavizado congelados preceden a la prueba de E07. Las entidades de dominio y las responsabilidades de las clases se describen en [arquitectura_poo.md](arquitectura_poo.md). El detalle de fechas, responsables y criterios está en [planificacion.md](planificacion.md), y los formatos de integración en [contratos_modulos.md](contratos_modulos.md).
 
 ## 7. Estado de la evidencia
 

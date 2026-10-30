@@ -5,6 +5,8 @@
 **Fecha:** 28 de octubre de 2026  
 **Estado:** acordado para desarrollo. Los módulos de E02-E08 deben implementarlo y comprobarlo con datos reales antes de declararse terminados.
 
+La implementación se organiza con programación orientada a objetos. Las entidades, servicios y adaptadores se describen en [arquitectura_poo.md](arquitectura_poo.md); los contratos de esta página indican qué información intercambian sus clases.
+
 ## 1. Alcance acordado
 
 El sistema procesa un archivo WAV de guitarra y produce estados por cuerda, eventos musicales y tablatura ASCII. Durante entrenamiento usa pares WAV/JAMS de GuitarSet; en inferencia no requiere un archivo JAMS. Una demostración web local permite cargar un solo WAV, consultar la tablatura y descargar los resultados generados.
@@ -97,6 +99,8 @@ Por tanto, **traste 0 es la clase 1 y no el silencio**. El relleno de una secuen
 
 **Garantías:** seis fuentes de cuerda reconocidas; metadatos y valores finitos validados; sin pares ambiguos. Las incidencias se reportan, no se corrigen de forma silenciosa.
 
+**Diseño POO:** `GuitarSetLoader` coordina la carga, `ValidadorEtiquetas` verifica eventos y `GeneradorParticiones` crea listas disjuntas. Los eventos se representan con `EventoNota`, no con diccionarios sin validación.
+
 ### E03 - `preprocessing.py`
 
 **Entrada:** ruta WAV incluida y configuración de audio.
@@ -104,6 +108,8 @@ Por tanto, **traste 0 es la clase 1 y no el silencio**. El relleno de una secuen
 **Salida mínima:** `samples` mono en punto flotante, `sample_rate`, duración original, y la transformación aplicada. Si segmenta, cada segmento incluye `start_s`, `end_s` y su relación con el WAV original.
 
 **Garantías:** no introduce NaN/inf; silencio, audio corto y última ventana son válidos; cualquier normalización se ajusta solo con entrenamiento cuando tenga parámetros aprendidos.
+
+**Diseño POO:** `AudioPreprocessor` transforma el WAV y `SegmentadorAudio` crea ventanas. Ambos reciben una configuración inmutable y devuelven datos con metadatos temporales.
 
 ### E04 - `cqt_extraction.py`
 
@@ -121,6 +127,8 @@ metadata: sample_rate, hop_length, n_bins, bins_per_octave, fmin, center
 
 Al formar lotes, E04 añade los ejes `B` y el canal de entrada: `x [B, T, F, 1]`, `y [B, T, 6]`, `valid_mask [B, T]`. Un consumidor no debe asumir que `T` es igual para todas las grabaciones fuera de un lote ya rellenado.
 
+**Diseño POO:** `CQTExtractor`, `AlineadorEtiquetas` y `ConstructorLotes` separan extracción, alineación y relleno.
+
 ### E05 - `model_crnn.py`
 
 **Entrada:** `x [B, T, F, 1]`, máscara temporal y configuración del modelo.
@@ -129,17 +137,23 @@ Al formar lotes, E04 añade los ejes `B` y el canal de entrada: `x [B, T, F, 1]`
 
 **Pérdida:** entropía cruzada por cuerda sobre etiquetas 0..20, ponderada por `valid_mask`; nunca interpreta `-1` como una clase.
 
+**Diseño POO:** `ModelFactory` crea las variantes y `CRNNTranscriptor` encapsula predicción, guardado y carga.
+
 ### E06 - `train.py`
 
 **Entrada:** constructor de E05, lotes/particiones de E04, configuración, semilla y rutas de salida.
 
 **Salida:** checkpoint recuperable, configuración exacta, versión de código, semilla, registro de épocas y métricas de entrenamiento/validación. El conjunto de prueba no interviene en selección de checkpoint ni ajuste de hiperparámetros.
 
+**Diseño POO:** `Entrenador` coordina el caso de uso, `ExperimentTracker` registra evidencias y `CheckpointRepository` persiste los estados del modelo.
+
 ### E07 - `evaluate.py`
 
 **Entrada:** checkpoint y configuración congelados, lote de prueba y `valid_mask`.
 
 **Salida:** métricas por cuerda/clase, matrices de confusión y resultados con la ruta del archivo fuente. Excluye el relleno y reporta soporte de clases activas además de accuracy global.
+
+**Diseño POO:** `Evaluador` calcula resultados, `MetricasPorCuerda` los agrupa y `ReporteEvaluacion` los exporta.
 
 ### E08 - `inference.py` y `tablature_generator.py`
 
@@ -152,6 +166,8 @@ Al formar lotes, E04 añade los ejes `B` y el canal de entrada: `x [B, T, F, 1]`
 - tablatura ASCII con seis líneas, de cuerda 1 (E4) a cuerda 6 (E2), rotuladas de modo explícito para no confundir el orden de presentación con el eje del tensor.
 
 La inferencia no carga ni exige un JAMS. Silencio, traste 0, audio corto y final incompleto deben conservar su significado definido arriba.
+
+**Diseño POO:** `ServicioInferencia` coordina el caso de uso y recibe por constructor los objetos `AudioPreprocessor`, `CQTExtractor`, `CRNNTranscriptor`, `SuavizadorPredicciones` y `GeneradorTablatura`. Devuelve un único `ResultadoInferencia`.
 
 ### Demo web local - `web_app.py` (integración de E08)
 
