@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "summary": {
+    "pistas_procesadas": 360,
+    "pistas_sin_incidencias": 0,
+    "pistas_para_revision": 360,
+    "eventos_analizados": 62476,
+    "eventos_validos": 17974,
+    "eventos_con_incidencias": 44502,
+    "incidencias": 44502,
+    "politica": "MIDI próximo a semitono (tolerancia configurable); fuera de rango/no entero se reporta y excluye del conjunto válido; pista con incidencias queda para revisión"
+  }
+}

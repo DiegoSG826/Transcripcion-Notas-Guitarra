@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "summary": {
+    "pistas_procesadas": 360,
+    "pistas_sin_incidencias": 305,
+    "pistas_para_revision": 55,
+    "eventos_analizados": 62476,
+    "eventos_validos": 62402,
+    "eventos_con_incidencias": 74,
+    "incidencias": 3385,
+    "errores_bloqueantes": 74,
+    "advertencias": 3311,
+    "eventos_normalizados_con_advertencia": 3311,
+    "eventos_ambiguos": 74,
+    "politica": "MIDI entero más cercano; desviación <= 0.25 automática; (0.25,0.49) aviso; >= 0.49 ambiguo y excluido; originales conservados"
+  }
+}
