@@ -1,0 +1,523 @@
+{
+  "schema_version": "1.0",
+  "issues": [
+    {
+      "track_id": "00_BN1-147-Gb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 12, cuerda 2: tiempo=5.113629024943293, duración=0.2554195011338152, MIDI=52.50262688634496",
+      "string_index": 2,
+      "event_index": 12
+    },
+    {
+      "track_id": "00_BN3-119-G_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 1, cuerda 1: tiempo=7.081979138322026, duración=0.1102947845804465, MIDI=46.50696500753132",
+      "string_index": 1,
+      "event_index": 1
+    },
+    {
+      "track_id": "00_BN3-119-G_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 9, cuerda 3: tiempo=5.840233106575965, duración=0.15092970521538973, MIDI=56.501898514594465",
+      "string_index": 3,
+      "event_index": 9
+    },
+    {
+      "track_id": "00_BN3-154-E_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 12, cuerda 1: tiempo=13.445169160997807, duración=0.16253968253965922, MIDI=51.50063437683388",
+      "string_index": 1,
+      "event_index": 12
+    },
+    {
+      "track_id": "00_BN3-154-E_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 28, cuerda 4: tiempo=19.293513832199665, duración=0.1857596371881982, MIDI=63.50220447073303",
+      "string_index": 4,
+      "event_index": 28
+    },
+    {
+      "track_id": "00_BN3-154-E_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 29, cuerda 4: tiempo=19.691019501133837, duración=0.17995464852606347, MIDI=63.4993273716309",
+      "string_index": 4,
+      "event_index": 29
+    },
+    {
+      "track_id": "00_Funk1-114-Ab_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 13, cuerda 4: tiempo=4.780178684807311, duración=0.1335147392289855, MIDI=62.50736009511559",
+      "string_index": 4,
+      "event_index": 13
+    },
+    {
+      "track_id": "00_Funk1-114-Ab_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 61, cuerda 4: tiempo=21.750156009070224, duración=0.16834467120179397, MIDI=62.500199211791944",
+      "string_index": 4,
+      "event_index": 61
+    },
+    {
+      "track_id": "00_Funk1-97-C_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 31, cuerda 0: tiempo=25.579567346938802, duración=0.14512471655325498, MIDI=47.50325484677224",
+      "string_index": 0,
+      "event_index": 31
+    },
+    {
+      "track_id": "00_Funk2-108-Eb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 17, cuerda 5: tiempo=6.403502040816306, duración=0.0986848072562907, MIDI=65.50732891484965",
+      "string_index": 5,
+      "event_index": 17
+    },
+    {
+      "track_id": "00_Funk3-98-A_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 3, cuerda 4: tiempo=1.8746058956915022, duración=0.15092970521550342, MIDI=63.49649006672375",
+      "string_index": 4,
+      "event_index": 3
+    },
+    {
+      "track_id": "00_Funk3-98-A_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 30, cuerda 5: tiempo=15.90941315192731, duración=0.1857596371883119, MIDI=73.49458033733582",
+      "string_index": 5,
+      "event_index": 30
+    },
+    {
+      "track_id": "00_Jazz1-200-B_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 24, cuerda 1: tiempo=9.016364625850429, duración=0.16834467120179397, MIDI=53.50091495837239",
+      "string_index": 1,
+      "event_index": 24
+    },
+    {
+      "track_id": "00_Jazz2-187-F#_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 30, cuerda 4: tiempo=13.145824943310686, duración=0.17995464852606347, MIDI=63.5041590337514",
+      "string_index": 4,
+      "event_index": 30
+    },
+    {
+      "track_id": "00_Jazz2-187-F#_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 35, cuerda 3: tiempo=18.9675029478459, duración=0.1102947845804465, MIDI=64.50309014493759",
+      "string_index": 3,
+      "event_index": 35
+    },
+    {
+      "track_id": "00_Jazz3-137-Eb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 8, cuerda 3: tiempo=3.0851691609976797, duración=0.16834467120179397, MIDI=61.492779346276016",
+      "string_index": 3,
+      "event_index": 8
+    },
+    {
+      "track_id": "00_Jazz3-137-Eb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 29, cuerda 5: tiempo=15.596507029478403, duración=0.16834467120179397, MIDI=69.49775798918097",
+      "string_index": 5,
+      "event_index": 29
+    },
+    {
+      "track_id": "00_Rock1-90-C#_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 109, cuerda 4: tiempo=26.46782040816327, duración=0.08126984126984382, MIDI=66.50574442043107",
+      "string_index": 4,
+      "event_index": 109
+    },
+    {
+      "track_id": "00_Rock2-85-F_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 82, cuerda 2: tiempo=22.24099319727891, duración=0.1044897959183686, MIDI=58.49145378973864",
+      "string_index": 2,
+      "event_index": 82
+    },
+    {
+      "track_id": "00_Rock3-117-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 11, cuerda 1: tiempo=3.60237460317461, duración=0.29605442176870156, MIDI=54.50603590281222",
+      "string_index": 1,
+      "event_index": 11
+    },
+    {
+      "track_id": "00_Rock3-117-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 113, cuerda 1: tiempo=28.403100226757402, duración=0.1160997732426381, MIDI=52.491894925579935",
+      "string_index": 1,
+      "event_index": 113
+    },
+    {
+      "track_id": "00_Rock3-117-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 56, cuerda 2: tiempo=14.610084353741513, duración=0.08707482993196436, MIDI=59.50905917744316",
+      "string_index": 2,
+      "event_index": 56
+    },
+    {
+      "track_id": "00_Rock3-117-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 46, cuerda 3: tiempo=15.771762358276675, duración=0.20317460317460245, MIDI=67.50324466968263",
+      "string_index": 3,
+      "event_index": 46
+    },
+    {
+      "track_id": "00_Rock3-117-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 76, cuerda 3: tiempo=26.304506122449, duración=0.1857596371881982, MIDI=62.49107814976963",
+      "string_index": 3,
+      "event_index": 76
+    },
+    {
+      "track_id": "00_Rock3-148-C_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 41, cuerda 1: tiempo=10.576010884353735, duración=0.1857596371881982, MIDI=48.50504278275831",
+      "string_index": 1,
+      "event_index": 41
+    },
+    {
+      "track_id": "01_Funk1-97-C_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 11, cuerda 2: tiempo=17.47940861678012, duración=0.08126984126988646, MIDI=58.49633471531893",
+      "string_index": 2,
+      "event_index": 11
+    },
+    {
+      "track_id": "01_Funk1-97-C_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 7, cuerda 4: tiempo=4.929000453514732, duración=0.09287981859415595, MIDI=72.5093558058769",
+      "string_index": 4,
+      "event_index": 7
+    },
+    {
+      "track_id": "01_Funk2-108-Eb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 27, cuerda 4: tiempo=9.204862585033993, duración=0.2321995464852762, MIDI=59.49600557910685",
+      "string_index": 4,
+      "event_index": 27
+    },
+    {
+      "track_id": "01_Funk3-98-A_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 32, cuerda 3: tiempo=11.505580952380797, duración=0.08126984126988646, MIDI=61.50151344187919",
+      "string_index": 3,
+      "event_index": 32
+    },
+    {
+      "track_id": "01_Funk3-98-A_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 31, cuerda 4: tiempo=11.49739501133763, duración=0.1102947845804465, MIDI=65.50048509089326",
+      "string_index": 4,
+      "event_index": 31
+    },
+    {
+      "track_id": "01_Jazz2-110-Bb_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 3, cuerda 3: tiempo=2.1536789115646116, duración=0.31346938775504896, MIDI=63.507237416538096",
+      "string_index": 3,
+      "event_index": 3
+    },
+    {
+      "track_id": "01_Jazz2-187-F#_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 34, cuerda 2: tiempo=14.422242176870782, duración=0.23800453514741093, MIDI=56.49617008811572",
+      "string_index": 2,
+      "event_index": 34
+    },
+    {
+      "track_id": "01_Jazz2-187-F#_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 11, cuerda 4: tiempo=7.511425850340174, duración=0.14512471655325498, MIDI=64.5016850817532",
+      "string_index": 4,
+      "event_index": 11
+    },
+    {
+      "track_id": "01_Jazz3-137-Eb_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 29, cuerda 3: tiempo=21.466234920634975, duración=0.0986848072562907, MIDI=64.5013420673428",
+      "string_index": 3,
+      "event_index": 29
+    },
+    {
+      "track_id": "01_Rock2-85-F_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 89, cuerda 3: tiempo=42.89997278911564, duración=0.1567346938775529, MIDI=64.5092693377844",
+      "string_index": 3,
+      "event_index": 89
+    },
+    {
+      "track_id": "01_SS1-68-E_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 34, cuerda 3: tiempo=23.85810430839001, duración=0.5688888888888641, MIDI=56.5006635615214",
+      "string_index": 3,
+      "event_index": 34
+    },
+    {
+      "track_id": "01_SS2-107-Ab_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 34, cuerda 1: tiempo=16.545228117913837, duración=0.16253968253965922, MIDI=50.501808057601956",
+      "string_index": 1,
+      "event_index": 34
+    },
+    {
+      "track_id": "01_SS2-88-F_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 14, cuerda 3: tiempo=5.459489342403572, duración=0.27283446712016257, MIDI=63.497640105377506",
+      "string_index": 3,
+      "event_index": 14
+    },
+    {
+      "track_id": "02_BN2-166-Ab_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 35, cuerda 2: tiempo=21.553109297052174, duración=0.08126984126988646, MIDI=59.49673749799074",
+      "string_index": 2,
+      "event_index": 35
+    },
+    {
+      "track_id": "02_Funk3-112-C#_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 8, cuerda 3: tiempo=4.856156916099508, duración=0.16834467120179397, MIDI=62.49994847253283",
+      "string_index": 3,
+      "event_index": 8
+    },
+    {
+      "track_id": "02_Rock2-142-D_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 18, cuerda 0: tiempo=13.46764172335601, duración=0.08126984126984382, MIDI=42.492814396033395",
+      "string_index": 0,
+      "event_index": 18
+    },
+    {
+      "track_id": "02_Rock2-142-D_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 34, cuerda 1: tiempo=8.375328798185947, duración=0.07546485260770908, MIDI=45.50743676594849",
+      "string_index": 1,
+      "event_index": 34
+    },
+    {
+      "track_id": "03_BN1-129-Eb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 13, cuerda 1: tiempo=11.899247165532984, duración=0.0870748299320212, MIDI=50.50642743283298",
+      "string_index": 1,
+      "event_index": 13
+    },
+    {
+      "track_id": "03_BN1-147-Gb_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 14, cuerda 4: tiempo=17.543629024943243, duración=0.16253968253965922, MIDI=64.49040091842298",
+      "string_index": 4,
+      "event_index": 14
+    },
+    {
+      "track_id": "03_BN2-166-Ab_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 17, cuerda 4: tiempo=10.467281632653112, duración=0.1335147392289855, MIDI=62.500825890034385",
+      "string_index": 4,
+      "event_index": 17
+    },
+    {
+      "track_id": "03_Funk1-114-Ab_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 36, cuerda 3: tiempo=23.747185487528327, duración=0.16834467120179397, MIDI=60.50496557648656",
+      "string_index": 3,
+      "event_index": 36
+    },
+    {
+      "track_id": "03_Funk2-108-Eb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 31, cuerda 3: tiempo=16.827334240362802, duración=0.07546485260775171, MIDI=60.50026344249994",
+      "string_index": 3,
+      "event_index": 31
+    },
+    {
+      "track_id": "03_Funk3-98-A_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 46, cuerda 4: tiempo=37.883766893423854, duración=0.08126984126988646, MIDI=70.50279835823831",
+      "string_index": 4,
+      "event_index": 46
+    },
+    {
+      "track_id": "03_Jazz1-130-D_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 2, cuerda 3: tiempo=1.8786920634920534, duración=0.17414965986392872, MIDI=59.500811286325636",
+      "string_index": 3,
+      "event_index": 2
+    },
+    {
+      "track_id": "03_Rock3-117-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 7, cuerda 5: tiempo=8.766637641723378, duración=0.22639455782314144, MIDI=66.50948779915237",
+      "string_index": 5,
+      "event_index": 7
+    },
+    {
+      "track_id": "03_SS2-107-Ab_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 78, cuerda 3: tiempo=30.5690829931973, duración=0.1277097505669076, MIDI=60.50250761541122",
+      "string_index": 3,
+      "event_index": 78
+    },
+    {
+      "track_id": "03_SS2-88-F_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 4, cuerda 3: tiempo=2.766292063492017, duración=0.13351473922904233, MIDI=60.50451279779089",
+      "string_index": 3,
+      "event_index": 4
+    },
+    {
+      "track_id": "03_SS2-88-F_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 6, cuerda 3: tiempo=3.464137868480691, duración=0.07546485260769487, MIDI=60.50039441968004",
+      "string_index": 3,
+      "event_index": 6
+    },
+    {
+      "track_id": "03_SS2-88-F_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 38, cuerda 3: tiempo=25.28926258503401, duración=0.24961451247168043, MIDI=60.496430915423645",
+      "string_index": 3,
+      "event_index": 38
+    },
+    {
+      "track_id": "04_Funk1-114-Ab_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 8, cuerda 1: tiempo=7.489815873015914, duración=0.17414965986392872, MIDI=49.495873372538945",
+      "string_index": 1,
+      "event_index": 8
+    },
+    {
+      "track_id": "04_Funk2-108-Eb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 13, cuerda 3: tiempo=9.456744671201818, duración=0.07546485260775171, MIDI=62.50491531374033",
+      "string_index": 3,
+      "event_index": 13
+    },
+    {
+      "track_id": "04_Funk2-108-Eb_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 14, cuerda 2: tiempo=17.790395464852622, duración=0.121904761904716, MIDI=57.50945618539227",
+      "string_index": 2,
+      "event_index": 14
+    },
+    {
+      "track_id": "04_Funk3-112-C#_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 30, cuerda 2: tiempo=12.544297505668737, duración=0.267029478457971, MIDI=53.49214449844253",
+      "string_index": 2,
+      "event_index": 30
+    },
+    {
+      "track_id": "04_Funk3-112-C#_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 33, cuerda 5: tiempo=26.395658049886606, duración=0.15092970521550342, MIDI=72.49047020598395",
+      "string_index": 5,
+      "event_index": 33
+    },
+    {
+      "track_id": "04_Jazz1-130-D_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 13, cuerda 3: tiempo=17.411345124716604, duración=0.121904761904716, MIDI=59.50138431028717",
+      "string_index": 3,
+      "event_index": 13
+    },
+    {
+      "track_id": "04_Rock1-130-A_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 13, cuerda 1: tiempo=4.217248072562359, duración=0.08126984126984205, MIDI=54.498271540334336",
+      "string_index": 1,
+      "event_index": 13
+    },
+    {
+      "track_id": "04_Rock1-130-A_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 23, cuerda 4: tiempo=20.19425487528345, duración=0.0986848072562374, MIDI=64.5064554976196",
+      "string_index": 4,
+      "event_index": 23
+    },
+    {
+      "track_id": "04_Rock2-142-D_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 3, cuerda 3: tiempo=2.7803174603174625, duración=0.1044897959183686, MIDI=57.50418117889402",
+      "string_index": 3,
+      "event_index": 3
+    },
+    {
+      "track_id": "04_Rock2-142-D_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 4, cuerda 3: tiempo=3.000385487528348, duración=0.1451247165532834, MIDI=57.4937504279713",
+      "string_index": 3,
+      "event_index": 4
+    },
+    {
+      "track_id": "04_Rock3-117-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 1, cuerda 1: tiempo=0.9471591836735058, duración=0.17414965986395714, MIDI=52.509905285199196",
+      "string_index": 1,
+      "event_index": 1
+    },
+    {
+      "track_id": "04_Rock3-117-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 113, cuerda 2: tiempo=31.722079818594125, duración=0.13931972789114866, MIDI=59.50617603697001",
+      "string_index": 2,
+      "event_index": 113
+    },
+    {
+      "track_id": "04_Rock3-117-Bb_solo",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 16, cuerda 3: tiempo=13.335594557823157, duración=0.24380952380951726, MIDI=61.50883364856795",
+      "string_index": 3,
+      "event_index": 16
+    },
+    {
+      "track_id": "04_Rock3-148-C_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 75, cuerda 2: tiempo=22.54787029478456, duración=0.1683446712018224, MIDI=50.50767074151921",
+      "string_index": 2,
+      "event_index": 75
+    },
+    {
+      "track_id": "04_SS3-84-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 13, cuerda 3: tiempo=8.367112925170034, duración=0.1277097505669076, MIDI=57.50121320315818",
+      "string_index": 3,
+      "event_index": 13
+    },
+    {
+      "track_id": "04_SS3-84-Bb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 81, cuerda 4: tiempo=43.38089977324262, duración=0.12190476190477284, MIDI=59.5097326817242",
+      "string_index": 4,
+      "event_index": 81
+    },
+    {
+      "track_id": "04_SS3-98-C_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 57, cuerda 3: tiempo=34.294761904761856, duración=0.16253968253965922, MIDI=59.50405429885087",
+      "string_index": 3,
+      "event_index": 57
+    },
+    {
+      "track_id": "05_Funk2-108-Eb_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 42, cuerda 5: tiempo=33.77182403628126, duración=0.12770975056696443, MIDI=72.4926454225839",
+      "string_index": 5,
+      "event_index": 42
+    },
+    {
+      "track_id": "05_Jazz1-200-B_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 25, cuerda 0: tiempo=13.732577777777806, duración=0.0986848072562907, MIDI=47.509811040215524",
+      "string_index": 0,
+      "event_index": 25
+    },
+    {
+      "track_id": "05_Rock2-142-D_comp",
+      "codigo": "MIDI_FRACCIONARIO",
+      "detalle": "Evento 25, cuerda 4: tiempo=9.745056689342405, duración=0.1044897959183686, MIDI=63.49092354270366",
+      "string_index": 4,
+      "event_index": 25
+    }
+  ]
+}
