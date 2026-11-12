@@ -1,0 +1,87 @@
+{
+  "tarea": "E03-T02",
+  "tipo_datos": "sinteticos",
+  "configuracion": {
+    "sr_hz": 8000,
+    "window_s": 2.0,
+    "hop_s": 1.0,
+    "peak_target": 0.95,
+    "pad_last": true
+  },
+  "casos": [
+    {
+      "caso": "silencio_3s",
+      "duracion_original_s": 3.0,
+      "frecuencia_muestreo": 8000,
+      "pico_procesado": 0.0,
+      "transformaciones": [
+        "mono_promedio_1_canales",
+        "silencio_sin_division"
+      ],
+      "cantidad_ventanas": 2,
+      "ventanas": [
+        {
+          "inicio_s": 0.0,
+          "fin_real_s": 2.0,
+          "muestras_validas": 16000,
+          "muestras_totales": 16000,
+          "relleno": false
+        },
+        {
+          "inicio_s": 1.0,
+          "fin_real_s": 3.0,
+          "muestras_validas": 16000,
+          "muestras_totales": 16000,
+          "relleno": false
+        }
+      ]
+    },
+    {
+      "caso": "audio_corto_0_5s",
+      "duracion_original_s": 0.5,
+      "frecuencia_muestreo": 8000,
+      "pico_procesado": 0.949999988079071,
+      "transformaciones": [
+        "mono_promedio_1_canales",
+        "normalizacion_pico_0.95"
+      ],
+      "cantidad_ventanas": 1,
+      "ventanas": [
+        {
+          "inicio_s": 0.0,
+          "fin_real_s": 0.5,
+          "muestras_validas": 4000,
+          "muestras_totales": 16000,
+          "relleno": true
+        }
+      ]
+    },
+    {
+      "caso": "ultima_incompleta_2_3s",
+      "duracion_original_s": 2.3,
+      "frecuencia_muestreo": 8000,
+      "pico_procesado": 0.949999988079071,
+      "transformaciones": [
+        "mono_promedio_1_canales",
+        "normalizacion_pico_0.95"
+      ],
+      "cantidad_ventanas": 2,
+      "ventanas": [
+        {
+          "inicio_s": 0.0,
+          "fin_real_s": 2.0,
+          "muestras_validas": 16000,
+          "muestras_totales": 16000,
+          "relleno": false
+        },
+        {
+          "inicio_s": 1.0,
+          "fin_real_s": 2.3,
+          "muestras_validas": 10400,
+          "muestras_totales": 16000,
+          "relleno": true
+        }
+      ]
+    }
+  ]
+}
