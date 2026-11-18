@@ -40,7 +40,7 @@ Las constantes del dominio mantienen seis cuerdas, 21 clases por cuerda, clase 0
 
 | Etapa | Clases principales | Responsabilidad |
 |---|---|---|
-| E02 | `GuitarSetLoader`, `ValidadorEtiquetas`, `GeneradorParticiones` | Leer pares WAV/JAMS, crear eventos normalizados, registrar incidencias y crear particiones. |
+| E02 | `GuitarSetLoader`, `ValidadorEtiquetas`, `GeneradorParticiones`, `CatalogoEtiquetas` | Leer pares WAV/JAMS, crear eventos normalizados, registrar incidencias, crear particiones y validar la fuente completa de etiquetas con su política de máscaras. |
 | E03 | `AudioPreprocessor`, `SegmentadorAudio` | Cargar, normalizar y segmentar audio conservando sus tiempos. |
 | E04 | `CQTExtractor`, `AlineadorEtiquetas`, `ConstructorLotes` | Crear CQT, alinear eventos a frames y formar lotes con máscara. |
 | E05 | `ModelFactory`, `CRNNTranscriptor` | Construir, guardar y cargar las arquitecturas CNN/CRNN. |
@@ -50,6 +50,8 @@ Las constantes del dominio mantienen seis cuerdas, 21 clases por cuerda, clase 0
 | Demo local | `ControladorWeb` o adaptador equivalente | Recibir una carga local y mostrar o descargar un `ResultadoInferencia`. |
 
 Las clases de cada etapa se implementan en módulos de `src/transcripcion_guitarra/`. Los scripts en `scripts/` solo crean objetos, reciben argumentos y muestran resultados.
+
+`supervision.py` centraliza la combinación de máscaras, la pérdida diferenciable de TensorFlow y los contadores de evaluación. E04 conserva la incertidumbre por cuerda; E05–E07 deben usar esa misma selección antes de calcular pérdidas y métricas. La política y su evidencia están en [politica_etiquetas_e02.md](politica_etiquetas_e02.md).
 
 ## 4. Reglas de diseño
 

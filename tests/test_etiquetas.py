@@ -126,6 +126,20 @@ class ValidacionEtiquetasTest(unittest.TestCase):
         self.assertTrue(all(path.exists() for path in rutas))
         self.assertEqual(json.loads(rutas[2].read_text())['summary']['pistas_procesadas'], 1)
 
+    def test_manifiesto_de_otro_equipo_admite_raiz_local(self):
+        self.save()
+        manifest = Path(self.tmp.name) / 'manifest.json'
+        manifest.write_text(json.dumps({
+            'data_root': str(Path(self.tmp.name) / 'equipo_anterior'),
+            'tracks': [{'included': True, 'track_id': '00_test',
+                        'jams_path': self.path.name, 'duration_s': 2}],
+        }), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'data_root'):
+            self.val.validar_manifiesto(manifest)
+        r = self.val.validar_manifiesto(manifest, data_root=self.tmp.name)
+        self.assertEqual(len(r), 1)
+        self.assertTrue(r[0].apto_entrenamiento)
+
 
 if __name__ == '__main__':
     unittest.main()

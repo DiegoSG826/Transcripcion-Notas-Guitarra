@@ -1,8 +1,8 @@
 # Contratos de integración y flujo del sistema
 
 **Tarea:** E01-T02 - Definir alcance, flujo e interfaces de módulos  
-**Versión del contrato:** 1.1
-**Fecha:** 28 de octubre de 2026  
+**Versión del contrato:** 1.2
+**Fecha:** 17 de noviembre de 2026
 **Estado:** acordado para desarrollo. Los módulos de E02-E08 deben implementarlo y comprobarlo con datos reales antes de declararse terminados.
 
 La implementación se organiza con programación orientada a objetos. Las entidades, servicios y adaptadores se describen en [arquitectura_poo.md](arquitectura_poo.md); los contratos de esta página indican qué información intercambian sus clases.
@@ -76,7 +76,9 @@ Cada cuerda tiene 21 clases:
 | 0 | Sin nota o cuerda no activa |
 | 1 a 20 | Traste 0 a 19, mediante `traste = clase - 1` |
 
-Por tanto, **traste 0 es la clase 1 y no el silencio**. El relleno de una secuencia no es una clase: se representa con `label = -1` y `valid_mask = False`. La pérdida y las métricas deben excluir toda posición con máscara falsa.
+Por tanto, **traste 0 es la clase 1 y no el silencio**. El relleno de una secuencia no es una clase: se representa con `label = -1` y `valid_mask = False`. Un intervalo ambiguo usa `label = -1` y `label_valid_mask = False` solo en la cuerda afectada; su audio real conserva `valid_mask = True`. La pérdida y las métricas seleccionan con `supervision_mask = valid_mask[..., None] & label_valid_mask` y excluyen los -1 antes del cálculo. Los excluidos no son silencios.
+
+La fuente única, tratamiento de incidencias y comandos reproducibles están en [politica_etiquetas_e02.md](politica_etiquetas_e02.md). Los umbrales no se ajustan con resultados del conjunto de prueba.
 
 ### 3.4 Tiempo
 
@@ -96,6 +98,8 @@ Por tanto, **traste 0 es la clase 1 y no el silencio**. El relleno de una secuen
 - manifiesto con `track_id`, rutas relativas, duración, intérprete/grupo usado para la partición, estado de inclusión y razón de exclusión;
 - eventos normalizados con `track_id`, `string_index`, `string_conventional`, `onset_s`, `duration_s`, `offset_s`, `midi_value`, `raw_fret_estimate`, `label_class` (cuando sea aplicable) y motivo de incidencia;
 - archivos de partición disjuntos por `track_id`.
+
+`configs/etiquetas.json` selecciona las fuentes normalizadas de T02. `CatalogoEtiquetas` verifica su coherencia con manifiesto, incidencias, resumen y particiones, conserva todos los eventos y registra SHA-256 de las entradas. Solo `MIDI_AMBIGUO` con intervalo localizable se trata automáticamente mediante máscara; otras incidencias bloquean la preparación. T03 conserva sus asignaciones por intérprete, y el catálogo comprueba la cobertura de todas las pistas incluidas.
 
 **Garantías:** seis fuentes de cuerda reconocidas; metadatos y valores finitos validados; sin pares ambiguos. Las incidencias se reportan, no se corrigen de forma silenciosa.
 
@@ -119,23 +123,27 @@ Por tanto, **traste 0 es la clase 1 y no el silencio**. El relleno de una secuen
 
 ```text
 cqt:        float32 [T, F]          # tiempo, frecuencia; valores finitos
-labels:     int16   [T, 6]           # -1 relleno o 0..20
+labels:     int16   [T, 6]           # -1 excluido (relleno/ambigüedad/conflicto) o 0..20
 valid_mask: bool    [T]              # False exclusivamente para relleno
+label_valid_mask: bool [T, 6]        # False si falta objetivo fiable en esa cuerda
+supervision_mask: bool [T, 6]        # valid_mask[:, None] & label_valid_mask
 frame_center_s: float64 [T]
 metadata: sample_rate, hop_length, n_bins, bins_per_octave, fmin, center
 ```
 
-Al formar lotes, E04 añade los ejes `B` y el canal de entrada: `x [B, T, F, 1]`, `y [B, T, 6]`, `valid_mask [B, T]`. Un consumidor no debe asumir que `T` es igual para todas las grabaciones fuera de un lote ya rellenado.
+Al formar lotes, E04 añade los ejes `B` y el canal de entrada: `x [B, T, F, 1]`, `y [B, T, 6]`, `valid_mask [B, T]`, `label_valid_mask [B, T, 6]`, `supervision_mask [B, T, 6]`. Un consumidor no debe asumir que `T` es igual para todas las grabaciones fuera de un lote ya rellenado. `EtiquetasAlineadas` transporta las dos máscaras base y `ConstructorLotes` calcula la combinada; para un ejemplo aislado se obtiene con `mascara_supervision` de `supervision.py`.
+
+La entrada recomendada es `CatalogoEtiquetas.alinear_pista`, que incluye los eventos ambiguos. Para ventanas, `inicio_s` añade el desplazamiento al tiempo local CQT y `fin_valido_s` excluye el relleno. Al exportar tiempos de segmentos se suma también ese desplazamiento a `frame_center_s`.
 
 **Diseño POO:** `CQTExtractor`, `AlineadorEtiquetas` y `ConstructorLotes` separan extracción, alineación y relleno.
 
 ### E05 - `model_crnn.py`
 
-**Entrada:** `x [B, T, F, 1]`, máscara temporal y configuración del modelo.
+**Entrada:** `x [B, T, F, 1]`, máscara temporal, máscara por cuerda y configuración del modelo.
 
 **Salida:** probabilidades `float32 [B, T, 6, 21]`; el último eje suma aproximadamente 1 para cada combinación válida de lote, tiempo y cuerda. El modelo conserva `T`.
 
-**Pérdida:** entropía cruzada por cuerda sobre etiquetas 0..20, ponderada por `valid_mask`; nunca interpreta `-1` como una clase.
+**Pérdida:** entropía cruzada por cuerda sobre etiquetas 0..20, seleccionando posiciones con `supervision_mask` ANTES de calcularla y promediando solo entre objetivos supervisados. `supervision.entropia_cruzada_enmascarada` proporciona la implementación TensorFlow diferenciable. Un lote sin supervisión devuelve cero y el entrenador omite su paso de optimización. Nunca interpreta `-1` como una clase ni sustituye una ambigüedad por silencio.
 
 **Diseño POO:** `ModelFactory` crea las variantes y `CRNNTranscriptor` encapsula predicción, guardado y carga.
 
@@ -149,9 +157,9 @@ Al formar lotes, E04 añade los ejes `B` y el canal de entrada: `x [B, T, F, 1]`
 
 ### E07 - `evaluate.py`
 
-**Entrada:** checkpoint y configuración congelados, lote de prueba y `valid_mask`.
+**Entrada:** checkpoint y configuración congelados, lote de prueba, `valid_mask` y `label_valid_mask`.
 
-**Salida:** métricas por cuerda/clase, matrices de confusión y resultados con la ruta del archivo fuente. Excluye el relleno y reporta soporte de clases activas además de accuracy global.
+**Salida:** métricas por cuerda/clase, matrices de confusión y resultados con la ruta del archivo fuente. Selecciona con la misma `supervision_mask` que la pérdida; excluye relleno, ambigüedades y conflictos, y reporta su cantidad y el soporte de clases activas además de accuracy global. Los contadores de `supervision.contar_aciertos_enmascarados` se acumulan entre lotes; una cuerda sin soporte no tiene exactitud definida.
 
 **Diseño POO:** `Evaluador` calcula resultados, `MetricasPorCuerda` los agrupa y `ReporteEvaluacion` los exporta.
 
