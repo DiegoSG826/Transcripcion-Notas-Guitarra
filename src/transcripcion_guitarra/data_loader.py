@@ -439,12 +439,15 @@ class ValidadorEtiquetas:
         salida.eventos.sort(key=lambda x: (x.onset_s if x.onset_s is not None else float('inf'), x.string_index))
         return salida
 
-    def validar_manifiesto(self, manifiesto_path: Path | str) -> list[ResultadoEtiquetas]:
-        """Procesa solo pistas incluidas en T01 y utiliza rutas de su manifiesto."""
+    def validar_manifiesto(self, manifiesto_path: Path | str,
+                           data_root: Path | str | None = None) -> list[ResultadoEtiquetas]:
+        """Procesa T01; data_root permite reutilizar el manifiesto en otro equipo."""
         path = Path(manifiesto_path)
         with path.open('r', encoding='utf-8') as fh:
             manifest = json.load(fh)
-        root = Path(manifest['data_root'])
+        root = Path(data_root) if data_root is not None else Path(manifest['data_root'])
+        if not root.is_dir():
+            raise ValueError(f'No existe data_root: {root}; indicar la raíz local de GuitarSet')
         resultados = []
         for pista in manifest['tracks']:
             if not pista['included']:

@@ -67,7 +67,7 @@ class TestCQT(unittest.TestCase):
         r=AlineadorEtiquetas().alinear(t,[{'string_index':0,'onset_s':0.,'offset_s':1.,'label_class':1}])
         self.assertEqual(r.labels[:,0].tolist(),[1,1,0])
     def test_ambiguedad_no_es_silencio(self):
-        r=AlineadorEtiquetas().alinear([0,.5,1],[{'string_index':1,'onset_s':0.,'offset_s':1.,'label_class':None}])
+        r=AlineadorEtiquetas().alinear([0,.5,1],[{'string_index':1,'onset_s':0.,'offset_s':1.,'label_class':None,'motivo_incidencia':'MIDI_AMBIGUO'}])
         self.assertEqual(r.labels[:,1].tolist(),[-1,-1,0]);self.assertFalse(r.label_valid_mask[0,1])
     def test_padding_lote(self):
         c1=ResultadoCQT(np.ones((2,3),dtype='float32'),np.array([0.,1.]),{})

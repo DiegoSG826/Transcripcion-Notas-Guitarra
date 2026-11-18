@@ -47,6 +47,19 @@ Cada integrante es responsable de dos etapas. Los revisores y las fechas por tar
 
 ## Estado actual
 
+El tratamiento de incidencias de E02 usa la política de [enmascaramiento por cuerda](docs/politica_etiquetas_e02.md), configurada en [`configs/etiquetas.json`](configs/etiquetas.json). Se conservan 360 pistas y 62 476 eventos; los 74 intervalos MIDI ambiguos de 55 pistas se excluyen de la supervisión solo en su cuerda. Las 3311 advertencias mantienen su etiqueta y las particiones siguen en 240/60/60. Los datos originales y los informes históricos se conservan.
+
+[`CatalogoEtiquetas`](src/transcripcion_guitarra/label_policy.py) comprueba la cobertura de las incidencias y selecciona los eventos completos. La alineación y los lotes transportan máscaras temporales y por cuerda. [`supervision.py`](src/transcripcion_guitarra/supervision.py) aporta pérdida TensorFlow y contadores de métricas que excluyen esas posiciones; su integración en el futuro entrenador/evaluador sigue siendo parte de E05–E07.
+
+Para reproducir la verificación de las 360 pistas sobre tiempos del manifiesto:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/preparar_mascaras_etiquetas.py
+.\.venv\Scripts\python.exe -m unittest discover -s tests
+```
+
+La evidencia está en [`reports/e02_mascaras/e02_mascaras_verificacion.json`](reports/e02_mascaras/e02_mascaras_verificacion.json) y la lista de casos en [`reports/e02_mascaras/e02_intervalos_enmascarados.csv`](reports/e02_mascaras/e02_intervalos_enmascarados.csv). Esto comprueba el tratamiento de etiquetas; no certifica la corrección musical ni equivale a un modelo entrenado.
+
 La auditoría preliminar ejecutada en el entorno virtual de Windows con Python 3.12.4 encontró 360 WAV, 360 archivos JAMS y 360 pares únicos. La salida fue `sin_incidencias_preliminares`. El informe generado por esa ejecución es:
 
 ```text

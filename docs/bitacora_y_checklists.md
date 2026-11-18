@@ -1,5 +1,23 @@
 # Bitácora y revisión inicial
 
+## 17 de noviembre de 2026: tratamiento de incidencias E02
+
+Se implementó la política solicitada de enmascarar intervalos ambiguos por
+cuerda. Se conservan 360 pistas, 62 476 eventos, las 3311 advertencias y las
+particiones 240/60/60. Los 74 intervalos MIDI ambiguos de 55 pistas no se
+convierten en silencio ni se usan como objetivos de entrenamiento/evaluación.
+
+Se verificaron las 360 pistas sobre tiempos del manifiesto: 981 posiciones de
+frame/cuerda excluidas con hop_length=512, ninguna posición adicional por
+conflictos. También se comprobó una CQT real `[1687,84]` con 22 posiciones
+excluidas. La suite completa obtuvo 68 pruebas correctas, incluidas pérdida y
+gradientes TensorFlow. No se ejecutó entrenamiento de un modelo.
+
+Comandos, política, alcance y evidencia: [politica_etiquetas_e02.md](politica_etiquetas_e02.md).
+No se registra una revisión musical manual ni una aceptación de terceros. Las
+etapas posteriores deben integrar la pérdida y las métricas con estas máscaras.
+La lista siguiente conserva el seguimiento inicial como registro histórico.
+
 ## Estado conocido
 
 - [x] Tema, institución, materia, cuatro integrantes y grupo definidos.

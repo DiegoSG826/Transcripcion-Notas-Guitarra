@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import numpy as np
 import librosa
 from .preprocessing import AudioPreparado
+from .supervision import mascara_supervision
 
 
 @dataclass(frozen=True)
@@ -66,29 +67,56 @@ class EtiquetasAlineadas:
 class AlineadorEtiquetas:
     @staticmethod
     def _eventos(payload):
-        return payload.get("events",[]) if isinstance(payload,dict) else payload
+        if isinstance(payload,dict):
+            if "events" not in payload or not isinstance(payload["events"],list):
+                raise ValueError("Se requiere el catálogo de eventos completo, no un resumen")
+            return payload["events"]
+        return payload
 
-    def alinear(self, frame_center_s, eventos) -> EtiquetasAlineadas:
-        times=np.asarray(frame_center_s,dtype=np.float64)
+    def alinear(self, frame_center_s, eventos, *, inicio_s=0.0,
+                fin_valido_s=None) -> EtiquetasAlineadas:
+        """Alinea intervalos [inicio,fin) en segundos del WAV original.
+
+        Para un segmento, frame_center_s contiene tiempos locales; inicio_s
+        es su desplazamiento y fin_valido_s su fin real (sin relleno).
+        MIDI_AMBIGUO y conflictos entre notas se excluyen por cuerda. Otros
+        errores requieren revisar T02 y no se convierten en silencios.
+        """
+        locales=np.asarray(frame_center_s,dtype=np.float64)
+        if (locales.ndim != 1 or not np.isfinite(locales).all()
+                or np.any(locales < 0) or np.any(np.diff(locales) < 0)):
+            raise ValueError("Los centros de frame deben ser finitos, ordenados y no negativos")
+        if not np.isfinite(inicio_s) or inicio_s < 0:
+            raise ValueError("inicio_s debe ser finito y no negativo")
+        if fin_valido_s is not None and (not np.isfinite(fin_valido_s) or fin_valido_s < inicio_s):
+            raise ValueError("Fin real del segmento inválido")
+        times=locales + inicio_s
+        valid=np.ones(len(times),dtype=bool) if fin_valido_s is None else times < fin_valido_s
         labels=np.zeros((len(times),6),dtype=np.int16)
-        label_mask=np.ones((len(times),6),dtype=bool)
+        labels[~valid]=-1
+        label_mask=np.broadcast_to(valid[:,None],labels.shape).copy()
+        registros=list(self._eventos(eventos))
+        if len({ev['track_id'] for ev in registros if 'track_id' in ev}) > 1:
+            raise ValueError("Alinear una sola pista por llamada")
         # Se admiten registros exportados por E02-T02; los ambiguos se enmascaran.
-        for ev in self._eventos(eventos):
-            cuerda=int(ev["string_index"])
-            if not 0 <= cuerda < 6:
+        for ev in registros:
+            cuerda=ev["string_index"]
+            if not isinstance(cuerda,(int,np.integer)) or isinstance(cuerda,bool) or not 0 <= cuerda < 6:
                 raise ValueError("Índice de cuerda fuera de rango")
             inicio=float(ev["onset_s"])
-            final=float(ev.get("offset_s",inicio+float(ev.get("duration_s",0))))
-            if not np.isfinite([inicio,final]).all() or final <= inicio:
+            final=float(ev["offset_s"]) if "offset_s" in ev else inicio+float(ev["duration_s"])
+            if not np.isfinite([inicio,final]).all() or inicio < 0 or final <= inicio:
                 raise ValueError("Evento temporal inválido")
-            activo=(times>=inicio)&(times<final)
+            activo=valid&(times>=inicio)&(times<final)
             clase=ev.get("label_class")
-            if clase is None or ev.get("estado_validacion") in ("AMBIGUO","INVALIDO","BLOQUEANTE"):
+            motivo=ev.get("motivo_incidencia")
+            if clase is None and motivo == "MIDI_AMBIGUO":
                 labels[activo,cuerda]=-1
                 label_mask[activo,cuerda]=False
                 continue
-            clase=int(clase)
-            if not 1 <= clase <= 20:
+            if motivo or ev.get("estado_validacion") in ("AMBIGUO","INVALIDO","BLOQUEANTE"):
+                raise ValueError("Incidencia no enmascarable; revisar T02")
+            if not isinstance(clase,(int,np.integer)) or isinstance(clase,bool) or not 1 <= clase <= 20:
                 raise ValueError("Una nota activa debe tener clase 1..20")
             # Si existen solapamientos contradictorios, priorizar máscara, nunca pisar el conflicto.
             conflicto=activo & ((labels[:,cuerda]!=0)&(labels[:,cuerda]!=clase))
@@ -96,7 +124,7 @@ class AlineadorEtiquetas:
             label_mask[conflicto,cuerda]=False
             asignable=activo & label_mask[:,cuerda]
             labels[asignable,cuerda]=clase
-        return EtiquetasAlineadas(labels,np.ones(len(times),dtype=bool),label_mask)
+        return EtiquetasAlineadas(labels,valid,label_mask)
 
 
 class ConstructorLotes:
@@ -106,6 +134,10 @@ class ConstructorLotes:
         f=ejemplos[0][0].cqt.shape[1]
         if any(c.cqt.shape[1]!=f or c.cqt.shape[0]!=e.labels.shape[0] for c,e in ejemplos):
             raise ValueError("Incompatibilidad de dimensiones")
+        for c,e in ejemplos:
+            mascara_supervision(e.labels,e.valid_mask,e.label_valid_mask)
+            if not np.isfinite(c.cqt).all():
+                raise ValueError("CQT no finita en lote")
         b=len(ejemplos); t=max(c.cqt.shape[0] for c,e in ejemplos)
         x=np.zeros((b,t,f,1),dtype=np.float32)
         y=np.full((b,t,6),-1,dtype=np.int16)
@@ -117,4 +149,6 @@ class ConstructorLotes:
             y[i,:n]=e.labels
             valid[i,:n]=e.valid_mask
             label_valid[i,:n]=e.label_valid_mask
-        return {"x":x,"y":y,"valid_mask":valid,"label_valid_mask":label_valid}
+        supervision=mascara_supervision(y,valid,label_valid)
+        return {"x":x,"y":y,"valid_mask":valid,"label_valid_mask":label_valid,
+                "supervision_mask":supervision}

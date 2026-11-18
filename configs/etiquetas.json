@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "politica": "enmascarar_intervalos_ambiguos_por_cuerda_v1",
+  "normalizacion": {
+    "umbral_advertencia": 0.25,
+    "umbral_ambiguedad": 0.49,
+    "tolerancia_tiempo_s": 0.01
+  },
+  "fuentes": {
+    "manifiesto": "reports/e02_t01/e02_t01_manifiesto.json",
+    "eventos": "reports/e02_t02_normalizado/e02_t02_eventos.json",
+    "incidencias": "reports/e02_t02_normalizado/e02_t02_incidencias.json",
+    "resumen": "reports/e02_t02_normalizado/e02_t02_resumen.json",
+    "particiones": "splits/particiones.json"
+  }
+}
