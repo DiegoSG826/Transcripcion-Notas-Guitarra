@@ -1,0 +1,584 @@
+{
+  "schema_version": "1.0",
+  "generated_at_utc": "2026-11-28T06:27:51.484074+00:00",
+  "config_entrenamiento": {
+    "epochs": 15,
+    "batch_size": 16,
+    "learning_rate": 0.001,
+    "clip_norm": 1.0,
+    "seed": 2026,
+    "max_pistas_por_epoca": null,
+    "checkpoint_path": "reports/e06_entrenamiento/mejor_crnn.keras",
+    "historial_path": "reports/e06_entrenamiento/historial_e06.json"
+  },
+  "config_modelo": {
+    "n_bins": 84,
+    "conv_filters": [
+      32,
+      64,
+      128
+    ],
+    "lstm_units": 128,
+    "dropout_rate": 0.3,
+    "num_cuerdas": 6,
+    "num_clases": 21
+  },
+  "mejor_loss": 0.4648005752720827,
+  "historial": [
+    {
+      "epoca": 1,
+      "train_loss": 1.0869394438621045,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 1.3712499945549015,
+        "accuracy_global": 0.6872787098617141,
+        "evaluados": 931187,
+        "aciertos": 639985,
+        "accuracy_por_cuerda": [
+          0.8067436436036547,
+          0.5503034832923105,
+          0.37515786489342506,
+          0.6102895216738515,
+          0.8185033890879101,
+          0.9626491585268421
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 2,
+      "train_loss": 0.9072810910737604,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.9822899892637678,
+        "accuracy_global": 0.7163834976218525,
+        "evaluados": 931187,
+        "aciertos": 667087,
+        "accuracy_por_cuerda": [
+          0.8079292258920863,
+          0.5642598487093906,
+          0.5129900255161215,
+          0.6430951046157217,
+          0.8073567691554341,
+          0.9626491585268421
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 3,
+      "train_loss": 0.8122080497554082,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.853410528478539,
+        "accuracy_global": 0.752732802326493,
+        "evaluados": 931187,
+        "aciertos": 700935,
+        "accuracy_por_cuerda": [
+          0.8518666477660795,
+          0.6455431126689777,
+          0.5190146653264259,
+          0.7040280435861251,
+          0.8332774928481225,
+          0.9626491585268421
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 4,
+      "train_loss": 0.6881755701766676,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.6682323599934056,
+        "accuracy_global": 0.785789535292052,
+        "evaluados": 931187,
+        "aciertos": 731717,
+        "accuracy_por_cuerda": [
+          0.8777497132695009,
+          0.7044227374064099,
+          0.6449844068146087,
+          0.7056841101380915,
+          0.8215896497512951,
+          0.9602909718821679
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 5,
+      "train_loss": 0.5646048549410648,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.5819322179834099,
+        "accuracy_global": 0.8039147883293044,
+        "evaluados": 931187,
+        "aciertos": 748595,
+        "accuracy_por_cuerda": [
+          0.8923826337968273,
+          0.7855191432879289,
+          0.6731230186345009,
+          0.728057118186446,
+          0.8038968067833303,
+          0.9404976675858869
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 6,
+      "train_loss": 0.5071288028119544,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.53607696934068,
+        "accuracy_global": 0.8230892398626699,
+        "evaluados": 931187,
+        "aciertos": 766450,
+        "accuracy_por_cuerda": [
+          0.9116547893658423,
+          0.8279165968633616,
+          0.6693342611922988,
+          0.7307570866116363,
+          0.8437411406922501,
+          0.9551171361562847
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 7,
+      "train_loss": 0.4650791016180573,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.5105947172876784,
+        "accuracy_global": 0.8262636828048502,
+        "evaluados": 931187,
+        "aciertos": 769406,
+        "accuracy_por_cuerda": [
+          0.8974471320506707,
+          0.8284578409515586,
+          0.7219902574808629,
+          0.7320909612274225,
+          0.8251913610473957,
+          0.9523916909358007
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 8,
+      "train_loss": 0.43839584186677744,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.5322930781186607,
+        "accuracy_global": 0.8193284485285984,
+        "evaluados": 931187,
+        "aciertos": 762948,
+        "accuracy_por_cuerda": [
+          0.8978015180607998,
+          0.8124911403497468,
+          0.7169836851465244,
+          0.7369753909799146,
+          0.8211966186438494,
+          0.9305108115770212
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 9,
+      "train_loss": 0.4005580927740249,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.4821736941664102,
+        "accuracy_global": 0.8375771998535203,
+        "evaluados": 931187,
+        "aciertos": 779941,
+        "accuracy_por_cuerda": [
+          0.9002048995476746,
+          0.8101393059188907,
+          0.7386981623237713,
+          0.7524212724003944,
+          0.865216102677766,
+          0.9587703925156568
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 10,
+      "train_loss": 0.3760957691836745,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.4740258053384705,
+        "accuracy_global": 0.8406753960267916,
+        "evaluados": 931187,
+        "aciertos": 782826,
+        "accuracy_por_cuerda": [
+          0.9144512171548602,
+          0.8346112707637985,
+          0.7420874249336323,
+          0.7585880260588838,
+          0.8436960387618876,
+          0.9506069431200227
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 11,
+      "train_loss": 0.3631990675246409,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.48978978668941847,
+        "accuracy_global": 0.8387230491834615,
+        "evaluados": 931187,
+        "aciertos": 781008,
+        "accuracy_por_cuerda": [
+          0.9224732277477803,
+          0.8314411268186446,
+          0.7394391608031134,
+          0.7402553048902292,
+          0.846485915311461,
+          0.952230612613077
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 12,
+      "train_loss": 0.34125436114051566,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.4648005752720827,
+        "accuracy_global": 0.8484718966222682,
+        "evaluados": 931187,
+        "aciertos": 790086,
+        "accuracy_por_cuerda": [
+          0.9181561618062088,
+          0.847678449464555,
+          0.7425900152065775,
+          0.7604309639338347,
+          0.8640305662225201,
+          0.9579327852374939
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 13,
+      "train_loss": 0.31572658393174063,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.49304706176113666,
+        "accuracy_global": 0.834621832134684,
+        "evaluados": 931187,
+        "aciertos": 777189,
+        "accuracy_por_cuerda": [
+          0.8922408793927756,
+          0.8407969174860501,
+          0.7462627902780999,
+          0.7554949834715536,
+          0.8287479704131336,
+          0.944176696476895
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 14,
+      "train_loss": 0.30580519731254197,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.47235638295388993,
+        "accuracy_global": 0.8444888083703918,
+        "evaluados": 931187,
+        "aciertos": 786377,
+        "accuracy_por_cuerda": [
+          0.916629080271653,
+          0.8347594685498525,
+          0.7644591355447306,
+          0.7567386443452093,
+          0.846840287621453,
+          0.947494909925002
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    },
+    {
+      "epoca": 15,
+      "train_loss": 0.291174967460964,
+      "train_evaluados": 3724292,
+      "pasos_aplicados": 450,
+      "pasos_omitidos_sin_supervision": 0,
+      "validation": {
+        "loss": 0.4839489695043272,
+        "accuracy_global": 0.8432634905770806,
+        "evaluados": 931187,
+        "aciertos": 785236,
+        "accuracy_por_cuerda": [
+          0.9162682508795217,
+          0.8582133790383897,
+          0.749948452279698,
+          0.7503463563313937,
+          0.8388701322130873,
+          0.9459227854952192
+        ],
+        "evaluados_por_cuerda": [
+          155198,
+          155198,
+          155196,
+          155187,
+          155204,
+          155204
+        ],
+        "excluidos_por_cuerda": [
+          1402,
+          1402,
+          1404,
+          1413,
+          1396,
+          1396
+        ]
+      }
+    }
+  ]
+}

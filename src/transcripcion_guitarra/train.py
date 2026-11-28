@@ -1,8 +1,4 @@
-"""E06: Pipeline de entrenamiento POO para CRNNTranscriptor con máscara de supervisión.
-
-Conecta AudioPreprocessor, SegmentadorAudio, CQTExtractor, AlineadorEtiquetas,
-ConstructorLotes y entropia_cruzada_enmascarada usando tf.GradientTape.
-"""
+"""E06: Pipeline de entrenamiento POO para CRNNTranscriptor con caché CQT y guardado por época."""
 from __future__ import annotations
 
 from collections import defaultdict
@@ -21,6 +17,8 @@ from .cqt_extraction import (
     ConfiguracionCQT,
     ConstructorLotes,
     CQTExtractor,
+    EtiquetasAlineadas,
+    ResultadoCQT,
 )
 from .domain import NUM_CUERDAS
 from .model_crnn import CRNNTranscriptor
@@ -36,11 +34,11 @@ from .supervision import contar_aciertos_enmascarados, entropia_cruzada_enmascar
 @dataclass(frozen=True)
 class ConfiguracionEntrenamiento:
     epochs: int = 20
-    batch_size: int = 8
+    batch_size: int = 16
     learning_rate: float = 1e-3
     clip_norm: float = 1.0
     seed: int = 2026
-    max_pistas_por_epoca: int | None = None  # Útil para pruebas rápidas / smoke tests
+    max_pistas_por_epoca: int | None = None
     checkpoint_path: str = "reports/e06_entrenamiento/mejor_crnn.keras"
     historial_path: str = "reports/e06_entrenamiento/historial_e06.json"
 
@@ -54,15 +52,16 @@ class ConfiguracionEntrenamiento:
 
 
 class ProveedorLotesGuitarSet:
-    """Genera lotes [B, T, F, 1] por partición sin cargar todo el dataset en RAM."""
+    """Genera lotes [B, T, F, 1] cacheando CQT y etiquetas en disco tras la primera lectura."""
 
     def __init__(
         self,
         data_root: str | Path,
-        config_json_path: str | Path = "configs/config_e02.json",
+        config_json_path: str | Path = "configs/etiquetas.json",
         repo_root: str | Path = ".",
         prep_config: ConfiguracionPreprocesamiento | None = None,
         cqt_config: ConfiguracionCQT | None = None,
+        cache_dir: str | Path | None = None,
     ) -> None:
         self.data_root = Path(data_root).expanduser().resolve()
         self.repo_root = Path(repo_root).expanduser().resolve()
@@ -72,6 +71,13 @@ class ProveedorLotesGuitarSet:
             raise FileNotFoundError(f"No existe el directorio de audio GuitarSet: {self.data_root}")
         if not self.config_path.is_file():
             raise FileNotFoundError(f"No existe el archivo de configuración: {self.config_path}")
+
+        self.cache_dir = (
+            Path(cache_dir).expanduser().resolve()
+            if cache_dir is not None
+            else self.data_root.parent / "cache_cqt_e06"
+        )
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
 
         self.cfg_doc = json.loads(self.config_path.read_text(encoding="utf-8"))
         fuentes = self.cfg_doc["fuentes"]
@@ -101,6 +107,56 @@ class ProveedorLotesGuitarSet:
             raise ValueError(f"Partición desconocida: {particion}")
         return [tid for tid in self.particiones["splits"][particion] if tid in self._rutas_wav]
 
+    def _obtener_segmentos_pista(self, track_id: str) -> list[tuple[ResultadoCQT, EtiquetasAlineadas]]:
+        archivo_cache = self.cache_dir / f"{track_id}.npz"
+        if archivo_cache.is_file():
+            with np.load(archivo_cache, allow_pickle=False) as z:
+                cqts = z["cqts"]
+                centers = z["centers"]
+                labels = z["labels"]
+                valids = z["valids"]
+                lvalids = z["lvalids"]
+            return [
+                (
+                    ResultadoCQT(cqts[i], centers[i], {"track_id": track_id, "cached": True}),
+                    EtiquetasAlineadas(labels[i], valids[i], lvalids[i]),
+                )
+                for i in range(len(cqts))
+            ]
+
+        audio = self.preprocesador.procesar(self._rutas_wav[track_id])
+        segmentos = self.segmentador.segmentar(audio)
+        eventos_pista = self._eventos_por_pista.get(track_id, [])
+
+        resultados: list[tuple[ResultadoCQT, EtiquetasAlineadas]] = []
+        for seg in segmentos:
+            audio_seg = AudioPreparado(
+                samples=seg.samples,
+                sample_rate=seg.sample_rate,
+                duration_original_s=seg.end_s - seg.start_s,
+                transformaciones=audio.transformaciones + ("segmentacion",),
+                source=f"{track_id}@{seg.start_s:.2f}-{seg.end_s:.2f}s",
+            )
+            cqt_res = self.extractor_cqt.extraer(audio_seg)
+            etiquetas = self.alineador.alinear(
+                cqt_res.frame_center_s,
+                eventos_pista,
+                inicio_s=seg.start_s,
+                fin_valido_s=seg.end_s,
+            )
+            resultados.append((cqt_res, etiquetas))
+
+        if resultados:
+            np.savez(
+                archivo_cache,
+                cqts=np.stack([r[0].cqt for r in resultados]),
+                centers=np.stack([r[0].frame_center_s for r in resultados]),
+                labels=np.stack([r[1].labels for r in resultados]),
+                valids=np.stack([r[1].valid_mask for r in resultados]),
+                lvalids=np.stack([r[1].label_valid_mask for r in resultados]),
+            )
+        return resultados
+
     def iterar_lotes(
         self,
         particion: str,
@@ -117,27 +173,8 @@ class ProveedorLotesGuitarSet:
 
         buffer_ejemplos = []
         for track_id in pistas:
-            audio = self.preprocesador.procesar(self._rutas_wav[track_id])
-            segmentos = self.segmentador.segmentar(audio)
-            eventos_pista = self._eventos_por_pista.get(track_id, [])
-
-            for seg in segmentos:
-                audio_seg = AudioPreparado(
-                    samples=seg.samples,
-                    sample_rate=seg.sample_rate,
-                    duration_original_s=seg.end_s - seg.start_s,
-                    transformaciones=audio.transformaciones + ("segmentacion",),
-                    source=f"{track_id}@{seg.start_s:.2f}-{seg.end_s:.2f}s",
-                )
-                cqt_res = self.extractor_cqt.extraer(audio_seg)
-                etiquetas = self.alineador.alinear(
-                    cqt_res.frame_center_s,
-                    eventos_pista,
-                    inicio_s=seg.start_s,
-                    fin_valido_s=seg.end_s,
-                )
-                buffer_ejemplos.append((cqt_res, etiquetas))
-
+            for ejemplo in self._obtener_segmentos_pista(track_id):
+                buffer_ejemplos.append(ejemplo)
                 if len(buffer_ejemplos) == batch_size:
                     if mezclar:
                         random.Random(seed).shuffle(buffer_ejemplos)
@@ -149,7 +186,7 @@ class ProveedorLotesGuitarSet:
 
 
 class EntrenadorCRNN:
-    """Gestiona optimización enmascarada, evaluación por cuerda y guardado de artefactos."""
+    """Gestiona optimización enmascarada, evaluación por cuerda y guardado incremental."""
 
     def __init__(
         self,
@@ -162,7 +199,6 @@ class EntrenadorCRNN:
         self.optimizador = tf.keras.optimizers.Adam(learning_rate=self.config.learning_rate)
 
     def _paso_entrenamiento(self, lote: dict[str, np.ndarray]) -> tuple[float, int, bool]:
-        """Ejecuta forward + backward; omite actualización si no hay frames supervisados."""
         mask = lote["supervision_mask"]
         evaluados = int(mask.sum())
 
@@ -192,7 +228,6 @@ class EntrenadorCRNN:
         return float(loss), evaluados, True
 
     def evaluar_lotes(self, lotes: Iterable[dict[str, np.ndarray]]) -> dict:
-        """Evalúa sin gradientes acumulando pérdida ponderada y exactitud por cuerda."""
         perdida_ponderada = 0.0
         total_evaluados = 0
         total_aciertos = 0
@@ -245,10 +280,11 @@ class EntrenadorCRNN:
         proveedor_train: Iterable[dict[str, np.ndarray]] | ProveedorLotesGuitarSet,
         proveedor_val: Iterable[dict[str, np.ndarray]] | ProveedorLotesGuitarSet | None = None,
     ) -> dict:
-        """Entrena durante N épocas usando un ProveedorLotesGuitarSet o iterables de lotes."""
         cfg = self.config
         mejor_val_loss = float("inf")
         historial: list[dict] = []
+        ruta_hist = Path(cfg.historial_path)
+        ruta_hist.parent.mkdir(parents=True, exist_ok=True)
 
         for epoca in range(1, cfg.epochs + 1):
             if isinstance(proveedor_train, ProveedorLotesGuitarSet):
@@ -310,6 +346,16 @@ class EntrenadorCRNN:
                 mejor_val_loss = criterio
                 self.modelo.guardar(cfg.checkpoint_path)
 
+            reporte = {
+                "schema_version": "1.0",
+                "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+                "config_entrenamiento": asdict(cfg),
+                "config_modelo": asdict(self.modelo.config),
+                "mejor_loss": mejor_val_loss if np.isfinite(mejor_val_loss) else None,
+                "historial": historial,
+            }
+            ruta_hist.write_text(json.dumps(reporte, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
             val_str = (
                 f" | val_loss={val_metrics['loss']:.4f} | val_acc={val_metrics['accuracy_global']:.4f}"
                 if (val_metrics and val_metrics["loss"] is not None)
@@ -318,18 +364,8 @@ class EntrenadorCRNN:
             t_str = f"{train_loss:.4f}" if train_loss is not None else "N/A"
             print(
                 f"[Época {epoca:02d}/{cfg.epochs:02d}] train_loss={t_str} "
-                f"(pasos={pasos_aplicados}, omitidos={pasos_omitidos}){val_str}"
+                f"(pasos={pasos_aplicados}, omitidos={pasos_omitidos}){val_str}",
+                flush=True,
             )
 
-        reporte = {
-            "schema_version": "1.0",
-            "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-            "config_entrenamiento": asdict(cfg),
-            "config_modelo": asdict(self.modelo.config),
-            "mejor_loss": mejor_val_loss if np.isfinite(mejor_val_loss) else None,
-            "historial": historial,
-        }
-        ruta_hist = Path(cfg.historial_path)
-        ruta_hist.parent.mkdir(parents=True, exist_ok=True)
-        ruta_hist.write_text(json.dumps(reporte, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         return reporte
